@@ -4,17 +4,6 @@ server:
 spring:
   application:
     name: gateway-service
-  cloud:
-    gateway:
-      routes:
-        - id: user-service
-          uri: http://localhost:8001
-          predicates:
-            - Path=/users/**
-        - id: catalog-service
-          uri: http://localhost:8002
-          predicates:
-            - Path=/catalogs/**
 
 eureka:
   client:
