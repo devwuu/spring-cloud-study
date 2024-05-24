@@ -1,12 +1,13 @@
 server:
-  port: 8001
+  port: 8002
 
 spring:
   application:
-    name: user-service
+    name: catalog-service
 
 eureka:
   client:
     register-with-eureka: false
     fetch-registry: false
+
 
