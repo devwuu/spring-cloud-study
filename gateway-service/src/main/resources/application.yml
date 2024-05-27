@@ -22,6 +22,11 @@ spring:
             - CustomFilter
 #            - AddRequestHeader=gateway, hello user
 #            - AddResponseHeader=gateway, bye user
+            - name: LoggerFilter # filter에 옵션을 주기 위해선 name으로 명확하게 해줘야 함. user-service에만 적용될 filter
+              args: # 해당 필터의 Config에 전달할 파라미터
+                baseMessage: Spring Cloud Gateway Logger Filter
+                preLogger: true
+                postLogger: true
         - id: catalog-service
           uri: http://localhost:8082
           filters:

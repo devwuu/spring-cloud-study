@@ -3,7 +3,9 @@ package com.example.gatewayservice.filter;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
+import org.springframework.cloud.gateway.filter.OrderedGatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
+import org.springframework.core.Ordered;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.stereotype.Component;
@@ -11,7 +13,7 @@ import reactor.core.publisher.Mono;
 
 @Slf4j
 @Component
-public class GlobalFilter extends AbstractGatewayFilterFactory<GlobalFilter.Config> {
+public class LoggerFilter extends AbstractGatewayFilterFactory<LoggerFilter.Config> {
 
     @Data
     public static class Config{
@@ -21,28 +23,36 @@ public class GlobalFilter extends AbstractGatewayFilterFactory<GlobalFilter.Conf
         private boolean postLogger;
     }
 
-    public GlobalFilter() {
+    public LoggerFilter() {
         super(Config.class);
     }
 
     @Override
     public GatewayFilter apply(Config config) {
-        // pre filter
-        return (exchange, chain) -> {
+
+        GatewayFilter filter = new OrderedGatewayFilter((exchange, chain)->{
             ServerHttpRequest request = exchange.getRequest();
             ServerHttpResponse response = exchange.getResponse();
-            log.info("[Global Filter] message: {}", config.getBaseMessage());
+            log.info("[Logging Filter] message: {}", config.getBaseMessage());
             if(config.isPreLogger()){
-                log.info("[Global PRE Filter] request id: {}", request.getId());
+                log.info("[Logging PRE Filter] request id: {}", request.getId());
             }
 
             // post filter
             return chain.filter(exchange).then(Mono.fromRunnable(() -> {
                 if(config.isPostLogger()) {
-                    log.info("[Global POST Filter] response status: {} ", response.getStatusCode());
+                    log.info("[Logging POST Filter] response status: {} ", response.getStatusCode());
                 }
             }));
-        };
+        }, Ordered.LOWEST_PRECEDENCE);
+        // filter가 실행될 순서를 정해준다
+        // Ordered.HIGHEST_PRECEDENCE
+        // 제일 먼저 실행 제일 마지막에 종료
+        // Ordered.LOWEST_PRECEDENCE
+        // 제일 나중에 실행 제일 먼저 종료
+
+
+        return filter;
     }
 
 
