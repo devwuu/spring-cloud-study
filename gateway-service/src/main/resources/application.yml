@@ -5,9 +5,27 @@ spring:
   application:
     name: gateway-service
 
-eureka:
-  client:
-    register-with-eureka: false
-    fetch-registry: false
-    service-url:
-      defaultZone: http://localhost:8761/eureka
+  cloud:
+    gateway:
+      routes:
+        - id : user-service
+          uri: http://localhost:8081
+          predicates:
+            - Path=/users/**
+          filters:
+            - AddRequestHeader=gateway, hello user
+            - AddResponseHeader=gateway, bye user
+        - id: catalog-service
+          uri: http://localhost:8082
+          filters:
+            - AddRequestHeader=gateway, hello catalog
+            - AddResponseHeader=gateway, bye catalog
+          predicates:
+            - Path=/catalogs/**
+
+#eureka:
+#  client:
+#    register-with-eureka: false
+#    fetch-registry: false
+#    service-url:
+#      defaultZone: http://localhost:8761/eureka
