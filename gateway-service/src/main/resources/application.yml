@@ -7,6 +7,12 @@ spring:
 
   cloud:
     gateway:
+      default-filters: # filter 중 가장 먼저 실행되고 가장 마지막에 종료된다
+        - name: GlobalFilter
+          args: # 해당 필터의 Config에 전달할 파라미터
+            baseMessage: Spring Cloud Gateway Global Filter
+            preLogger: true
+            postLogger: true
       routes:
         - id : user-service
           uri: http://localhost:8081
@@ -24,6 +30,7 @@ spring:
 #            - AddResponseHeader=gateway, bye catalog
           predicates:
             - Path=/catalogs/**
+
 
 #eureka:
 #  client:
