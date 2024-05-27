@@ -1,9 +1,4 @@
-package com.example.gatewayservice;
-
-import org.springframework.cloud.gateway.route.RouteLocator;
-import org.springframework.cloud.gateway.route.builder.RouteLocatorBuilder;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
+package com.example.gatewayservice.filter;
 
 //@Configuration
 //public class FilterConfig {
