@@ -15,7 +15,7 @@ spring:
             postLogger: true
       routes:
         - id : user-service
-          uri: http://localhost:8081
+          uri: lb://USER-SERVICE # lb는 loadbalance. 유레카에서 서비스를 찾아서 라우팅한다,
           predicates:
             - Path=/users/**
           filters:
@@ -28,7 +28,7 @@ spring:
                 preLogger: true
                 postLogger: true
         - id: catalog-service
-          uri: http://localhost:8082
+          uri: lb://CATALOG-SERVICE
           filters:
             - CustomFilter
 #            - AddRequestHeader=gateway, hello catalog
@@ -37,9 +37,9 @@ spring:
             - Path=/catalogs/**
 
 
-#eureka:
-#  client:
-#    register-with-eureka: false
-#    fetch-registry: false
-#    service-url:
-#      defaultZone: http://localhost:8761/eureka
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka
