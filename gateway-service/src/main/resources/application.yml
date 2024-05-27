@@ -15,7 +15,7 @@ spring:
             postLogger: true
       routes:
         - id : user-service
-          uri: lb://USER-SERVICE # lb는 loadbalance. 유레카에서 서비스를 찾아서 라우팅한다,
+          uri: lb://USER-SERVICE # lb는 loadbalance. 유레카에서 서비스를 찾아서 라우팅한다, 서로 포트가 다른 인스턴스가 여러개일 경우 어느쪽으로 포워딩 해야할지 모르기 때문에 이름으로 포워딩할 수 있께 한다.
           predicates:
             - Path=/users/**
           filters:
