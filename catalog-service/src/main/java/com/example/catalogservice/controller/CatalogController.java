@@ -1,4 +1,4 @@
-package com.example.catalogservice;
+package com.example.catalogservice.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.env.Environment;
