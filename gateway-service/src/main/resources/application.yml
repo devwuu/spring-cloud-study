@@ -35,6 +35,12 @@ spring:
 #            - AddResponseHeader=gateway, bye catalog
           predicates:
             - Path=/catalogs/**
+        - id: order-service
+          uri: lb://ORDER-SERVICE
+          filters:
+            - CustomFilter
+          predicates:
+            - Path=/orders/**
 
 
 eureka:
