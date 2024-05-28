@@ -11,7 +11,9 @@ import java.time.LocalDate;
 public class CatalogDTO {
 
     private String productId;
-    private Integer qty;
+    private String productName;
+    private Integer stock;
+
     private Integer unitPrice;
     private Integer totalPrice;
 
