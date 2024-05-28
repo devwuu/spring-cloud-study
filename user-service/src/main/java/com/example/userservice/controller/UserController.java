@@ -1,6 +1,7 @@
 package com.example.userservice.controller;
 
 import com.example.userservice.dto.CreateUserRequest;
+import com.example.userservice.dto.CreateUserResponse;
 import com.example.userservice.dto.UserDTO;
 import com.example.userservice.exception.ApiException;
 import com.example.userservice.mapper.UserMapper;
@@ -12,6 +13,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.env.Environment;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -35,15 +38,16 @@ public class UserController {
     }
 
     @PostMapping("")
-    public String create(@RequestBody CreateUserRequest request,
-                         BindingResult bindingResult){
+    public ResponseEntity create(@RequestBody CreateUserRequest request,
+                                 BindingResult bindingResult){
         if(bindingResult.hasErrors()){
             log.info("binding error : {}", bindingResult.toString());
             throw new ApiException("binding error");
         }
         UserDTO userDTO = UserMapper.INSTANCE.createUserReqToUserDTO(request);
         UserDTO saved = service.create(userDTO);
-        return "Create New User";
+        CreateUserResponse response = UserMapper.INSTANCE.userDTOToCreateUserRes(saved);
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
 

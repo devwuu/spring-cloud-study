@@ -19,8 +19,8 @@ public class UserService {
         userDTO.setUserId(UUID.randomUUID().toString());
         User user = UserMapper.INSTANCE.userDTOToUser(userDTO);
         user.setEncryptedPwd("TO_DO");
-        User saved = repository.save(user);
-        return  UserMapper.INSTANCE.userToUserDTO(saved);
+        User saved = repository.saveAndFlush(user);
+        return UserMapper.INSTANCE.userToUserDTO(saved);
     }
 
 }
