@@ -17,8 +17,7 @@ public class WebSecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf(csrfConfigurer -> csrfConfigurer.disable())
                 .authorizeHttpRequests(requestMatcherRegistry ->
-                        requestMatcherRegistry.requestMatchers("/users/**").permitAll()
-                                .requestMatchers("/h2-console/**").permitAll()
+                        requestMatcherRegistry.requestMatchers("/**").permitAll()
                 )
                 .headers(headersConfigurer -> 
                         headersConfigurer.frameOptions(frameOptionsConfig -> 

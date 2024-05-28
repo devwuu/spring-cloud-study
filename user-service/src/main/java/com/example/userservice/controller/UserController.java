@@ -1,22 +1,21 @@
 package com.example.userservice.controller;
 
 import com.example.userservice.dto.CreateUserRequest;
-import com.example.userservice.dto.CreateUserResponse;
+import com.example.userservice.dto.UserResponse;
 import com.example.userservice.dto.UserDTO;
 import com.example.userservice.exception.ApiException;
 import com.example.userservice.mapper.UserMapper;
 import com.example.userservice.property.GreetingProperty;
 import com.example.userservice.service.UserService;
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.core.env.Environment;
+import org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/users")
@@ -26,10 +25,11 @@ public class UserController {
 
     private final GreetingProperty prop;
     private final UserService service;
+    private final ServletWebServerApplicationContext context;
 
     @GetMapping("/health_check")
     public String status(){
-        return "User Service Is Working";
+        return String.format("User Service Is Working on port %s", context.getWebServer().getPort());
     }
 
     @GetMapping("/welcome")
@@ -46,8 +46,23 @@ public class UserController {
         }
         UserDTO userDTO = UserMapper.INSTANCE.createUserReqToUserDTO(request);
         UserDTO saved = service.create(userDTO);
-        CreateUserResponse response = UserMapper.INSTANCE.userDTOToCreateUserRes(saved);
+        UserResponse response = UserMapper.INSTANCE.userDTOToCreateUserRes(saved);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity findByUserId(@PathVariable("id") String userId){
+        UserDTO user = service.findByUserId(userId);
+        UserResponse response = UserMapper.INSTANCE.userDTOToCreateUserRes(user);
+        response.setOrders(null); // todo order API 추가
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
+
+    @GetMapping("")
+    public ResponseEntity findAll(){
+        List<UserDTO> all = service.findAll();
+        List<UserResponse> responses = UserMapper.INSTANCE.userDTOToCreateUserRes(all);
+        return ResponseEntity.status(HttpStatus.OK).body(responses);
     }
 
 
