@@ -13,6 +13,7 @@ import org.springframework.boot.web.servlet.context.ServletWebServerApplicationC
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -37,11 +38,16 @@ public class UserController {
         return prop.getMessage();
     }
 
+    @PostMapping("/login")
+    public String login(){
+        return prop.getMessage();
+    }
+
     @PostMapping("")
-    public ResponseEntity create(@RequestBody CreateUserRequest request,
+    public ResponseEntity create(@RequestBody @Validated CreateUserRequest request,
                                  BindingResult bindingResult){
         if(bindingResult.hasErrors()){
-            log.info("binding error : {}", bindingResult.toString());
+            log.info("binding error : {}", bindingResult.toString()); // todo binding exception return 해주는 로직
             throw new ApiException("binding error");
         }
         UserDTO userDTO = UserMapper.INSTANCE.createUserReqToUserDTO(request);

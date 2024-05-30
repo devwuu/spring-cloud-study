@@ -6,16 +6,20 @@ import com.example.userservice.exception.ApiException;
 import com.example.userservice.mapper.UserMapper;
 import com.example.userservice.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
-public class UserService {
+public class UserService implements UserDetailsService {
 
     private final UserRepository repository;
     private final BCryptPasswordEncoder passwordEncoder;
@@ -40,4 +44,16 @@ public class UserService {
         return UserMapper.INSTANCE.userToUserDTO(users);
     }
 
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        // username == email
+        Optional<User> optional = repository.findByEmail(username);
+        User user = optional.orElseThrow(() -> new ApiException("Not Exist User"));
+
+        return new org.springframework.security.core.userdetails.User(
+                user.getEmail(), user.getEncryptedPwd(),
+                true, true, true, true,
+                new ArrayList<>()
+        );
+    }
 }
