@@ -14,19 +14,34 @@ spring:
             preLogger: true
             postLogger: true
       routes:
-        - id : user-service
-          uri: lb://USER-SERVICE # lb는 loadbalance. 유레카에서 서비스를 찾아서 라우팅한다, 서로 포트가 다른 인스턴스가 여러개일 경우 어느쪽으로 포워딩 해야할지 모르기 때문에 이름으로 포워딩할 수 있께 한다.
+        - id: user-service
+          uri: lb://USER-SERVICE
           predicates:
-            - Path=/users/**
+            - Path=/user-service/login #로그인
+            - Method=POST
           filters:
-            - CustomFilter
-#            - AddRequestHeader=gateway, hello user
-#            - AddResponseHeader=gateway, bye user
-            - name: LoggerFilter # filter에 옵션을 주기 위해선 name으로 명확하게 해줘야 함. user-service에만 적용될 filter
-              args: # 해당 필터의 Config에 전달할 파라미터
-                baseMessage: Spring Cloud Gateway Logger Filter
-                preLogger: true
-                postLogger: true
+            - RemoveRequestHeader=Cookie # 리퀘스트 헤더에서 cookie 삭제
+            - RewritePath=/user-service/(?<segment>.*), /$\{segment}
+
+        - id: user-service
+          uri: lb://USER-SERVICE
+          predicates:
+            - Path=/user-service/users #회원가입
+            - Method=POST
+          filters:
+            - RemoveRequestHeader=Cookie
+            - RewritePath=/user-service/(?<segment>.*), /$\{segment}
+          
+        - id: user-service
+          uri: lb://USER-SERVICE
+          predicates:
+            - Path=/user-service/**
+            - Method=GET
+          filters:
+            - RemoveRequestHeader=Cookie
+            - RewritePath=/user-service/(?<segment>.*), /$\{segment} # /user-service/users/** 를 /users/**로 바꿔서 맵핑해준다. User MSA에서는 service 관련된 라우팅에 신경쓰지 않고 /users에 맵핑할 수 있다
+
+
         - id: catalog-service
           uri: lb://CATALOG-SERVICE
           filters:

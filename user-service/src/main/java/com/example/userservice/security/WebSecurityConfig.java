@@ -1,12 +1,13 @@
 package com.example.userservice.security;
 
 import com.example.userservice.service.UserService;
-import jakarta.servlet.Filter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authorization.AuthorizationDecision;
+import org.springframework.security.authentication.ProviderManager;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -18,21 +19,15 @@ import org.springframework.security.web.SecurityFilterChain;
 @RequiredArgsConstructor
 public class WebSecurityConfig {
 
-    private final UserService service;
-
     @Bean
-    public BCryptPasswordEncoder passwordEncoder(){
-        return new BCryptPasswordEncoder();
-    }
-
-    @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-
-        AuthenticationManager authenticationManager = getAuthenticationManager(http);
+    public SecurityFilterChain filterChain(HttpSecurity http, AuthenticationManager authenticationManager) throws Exception {
 
         http.csrf(csrfConfigurer -> csrfConfigurer.disable())
                 .authorizeHttpRequests(requestMatcherRegistry ->
-                        requestMatcherRegistry.requestMatchers("/login").permitAll()
+                        requestMatcherRegistry.requestMatchers("/users/login").permitAll()
+                                .requestMatchers("/users/health_check").permitAll()
+                                .requestMatchers("/users/welcome").permitAll()
+                                .requestMatchers(HttpMethod.POST, "/users").permitAll()
                                 .anyRequest().authenticated()
                 )
                 .addFilter(getAuthenticationFilter(authenticationManager))
@@ -43,12 +38,14 @@ public class WebSecurityConfig {
         return http.build();
     }
 
-    private AuthenticationManager getAuthenticationManager(HttpSecurity http) throws Exception {
-        AuthenticationManagerBuilder managerBuilder = http.getSharedObject(AuthenticationManagerBuilder.class);
-        managerBuilder.userDetailsService(service)
-                .passwordEncoder(passwordEncoder());
-        AuthenticationManager authenticationManager = managerBuilder.build();
-        return authenticationManager;
+    @Bean
+    public AuthenticationManager authenticationManager(UserService service, BCryptPasswordEncoder passwordEncoder) {
+
+        DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
+        authenticationProvider.setUserDetailsService(service);
+        authenticationProvider.setPasswordEncoder(passwordEncoder);
+
+        return new ProviderManager(authenticationProvider);
     }
 
     private AuthenticationFilter getAuthenticationFilter(AuthenticationManager authenticationManager) {
@@ -56,6 +53,8 @@ public class WebSecurityConfig {
         filter.setAuthenticationManager(authenticationManager);
         return filter;
     }
+
+
 
 
 
