@@ -39,11 +39,6 @@ public class UserController {
         return prop.getMessage();
     }
 
-    @PostMapping("/login")
-    public String login(){
-        return prop.getMessage();
-    }
-
     @PostMapping("")
     public ResponseEntity create(@RequestBody @Validated CreateUserRequest request,
                                  BindingResult bindingResult){
