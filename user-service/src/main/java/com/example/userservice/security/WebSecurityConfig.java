@@ -1,5 +1,6 @@
 package com.example.userservice.security;
 
+import com.example.userservice.common.ApiPrefix;
 import com.example.userservice.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -24,10 +25,10 @@ public class WebSecurityConfig {
 
         http.csrf(csrfConfigurer -> csrfConfigurer.disable())
                 .authorizeHttpRequests(requestMatcherRegistry ->
-                        requestMatcherRegistry.requestMatchers("/users/login").permitAll()
-                                .requestMatchers("/users/health_check").permitAll()
-                                .requestMatchers("/users/welcome").permitAll()
-                                .requestMatchers(HttpMethod.POST, "/users").permitAll()
+                        requestMatcherRegistry.requestMatchers(ApiPrefix.USER_PREFIX+"/login").permitAll()
+                                .requestMatchers(ApiPrefix.USER_PREFIX+"/health_check").permitAll()
+                                .requestMatchers(ApiPrefix.USER_PREFIX+"/welcome").permitAll()
+                                .requestMatchers(HttpMethod.POST, ApiPrefix.USER_PREFIX).permitAll()
                                 .anyRequest().authenticated()
                 )
                 .addFilter(getAuthenticationFilter(authenticationManager))

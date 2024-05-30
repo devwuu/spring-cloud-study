@@ -1,5 +1,6 @@
 package com.example.userservice.controller;
 
+import com.example.userservice.common.ApiPrefix;
 import com.example.userservice.dto.CreateUserRequest;
 import com.example.userservice.dto.UserResponse;
 import com.example.userservice.dto.UserDTO;
@@ -19,7 +20,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping(ApiPrefix.USER_PREFIX)
 @RequiredArgsConstructor
 @Slf4j
 public class UserController {
