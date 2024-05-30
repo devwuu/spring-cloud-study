@@ -1,16 +1,21 @@
 package com.example.userservice.security;
 
 import com.example.userservice.dto.LoginRequest;
+import com.example.userservice.dto.UserDTO;
 import com.example.userservice.exception.ApiException;
+import com.example.userservice.service.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.core.env.Environment;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import java.io.IOException;
@@ -18,7 +23,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
+@RequiredArgsConstructor
 public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
+
+    private final UserService service;
+    private final Environment env; //todo property로 변환 검토
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request,
@@ -41,10 +50,10 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
                                             HttpServletResponse response,
                                             FilterChain chain,
                                             Authentication authResult) throws IOException, ServletException {
+        User principal = (User) authResult.getPrincipal();
+        UserDTO user = service.findByEmail(principal.getUsername());
+        log.info("successful login!! {}", user);
 
-        log.info("successful login!!");
-
-        super.successfulAuthentication(request, response, chain, authResult);
     }
 
 

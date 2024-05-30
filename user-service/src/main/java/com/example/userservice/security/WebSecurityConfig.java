@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.env.Environment;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
@@ -22,7 +23,12 @@ import org.springframework.security.web.SecurityFilterChain;
 public class WebSecurityConfig {
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http, AuthenticationManager authenticationManager) throws Exception {
+    public SecurityFilterChain filterChain(
+            HttpSecurity http,
+            AuthenticationManager authenticationManager,
+            UserService service,
+            Environment environment
+            ) throws Exception {
 
         http.csrf(csrfConfigurer -> csrfConfigurer.disable())
                 .authorizeHttpRequests(requestMatcherRegistry ->
@@ -32,7 +38,7 @@ public class WebSecurityConfig {
                                 .requestMatchers(HttpMethod.POST, ApiPrefix.USER_PREFIX).permitAll()
                                 .anyRequest().authenticated()
                 )
-                .addFilter(getAuthenticationFilter(authenticationManager))
+                .addFilter(getAuthenticationFilter(environment, service, authenticationManager))
                 .headers(headersConfigurer ->
                         headersConfigurer.frameOptions(frameOptionsConfig ->
                                 frameOptionsConfig.disable()));
@@ -50,8 +56,12 @@ public class WebSecurityConfig {
         return new ProviderManager(authenticationProvider);
     }
 
-    private AuthenticationFilter getAuthenticationFilter(AuthenticationManager authenticationManager) {
-        AuthenticationFilter filter = new AuthenticationFilter();
+    private AuthenticationFilter getAuthenticationFilter(
+            Environment environment,
+            UserService service,
+            AuthenticationManager authenticationManager) {
+
+        AuthenticationFilter filter = new AuthenticationFilter(service, environment);
         filter.setAuthenticationManager(authenticationManager);
         return filter;
     }

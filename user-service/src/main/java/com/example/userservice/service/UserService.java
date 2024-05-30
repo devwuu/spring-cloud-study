@@ -11,6 +11,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,11 +20,13 @@ import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class UserService implements UserDetailsService {
 
     private final UserRepository repository;
     private final BCryptPasswordEncoder passwordEncoder;
 
+    @Transactional
     public UserDTO create(UserDTO userDTO){
         userDTO.setUserId(UUID.randomUUID().toString());
         String encoded = passwordEncoder.encode(userDTO.getPwd());
@@ -35,6 +38,12 @@ public class UserService implements UserDetailsService {
 
     public UserDTO findByUserId(String userId){
         Optional<User> optional = repository.findByUserId(userId);
+        User user = optional.orElseThrow(() -> new ApiException("Not Exist User"));
+        return UserMapper.INSTANCE.userToUserDTO(user);
+    }
+
+    public UserDTO findByEmail(String email){
+        Optional<User> optional = repository.findByEmail(email);
         User user = optional.orElseThrow(() -> new ApiException("Not Exist User"));
         return UserMapper.INSTANCE.userToUserDTO(user);
     }
