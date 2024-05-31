@@ -9,4 +9,5 @@ spring:
     config:
       server:
         git:
-          uri:
+          uri: https://github.com/devwuu/spring-cloud-study.git
+          default-label: section/configuration
