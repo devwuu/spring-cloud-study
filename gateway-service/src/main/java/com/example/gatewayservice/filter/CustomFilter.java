@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
 
 @Slf4j
-@Component
+//@Component
 public class CustomFilter extends AbstractGatewayFilterFactory<CustomFilter.Config> {
 
     public static class Config{

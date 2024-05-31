@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
 
 @Slf4j
-@Component
+//@Component
 public class GlobalFilter extends AbstractGatewayFilterFactory<GlobalFilter.Config> {
 
     @Data

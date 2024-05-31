@@ -7,13 +7,14 @@ spring:
 
   cloud:
     gateway:
-      default-filters: # filter 중 가장 먼저 실행되고 가장 마지막에 종료된다
-        - name: GlobalFilter
-          args: # 해당 필터의 Config에 전달할 파라미터
-            baseMessage: Spring Cloud Gateway Global Filter
-            preLogger: true
-            postLogger: true
+#      default-filters: # filter 중 가장 먼저 실행되고 가장 마지막에 종료된다
+#        - name: GlobalFilter
+#          args: # 해당 필터의 Config에 전달할 파라미터
+#            baseMessage: Spring Cloud Gateway Global Filter
+#            preLogger: true
+#            postLogger: true
       routes:
+          # 인증 불필요
         - id: user-service
           uri: lb://USER-SERVICE
           predicates:
@@ -32,6 +33,7 @@ spring:
             - RemoveRequestHeader=Cookie
             - RewritePath=/user-service/(?<segment>.*), /$\{segment}
           
+          # 인증 필요
         - id: user-service
           uri: lb://USER-SERVICE
           predicates:
@@ -40,23 +42,22 @@ spring:
           filters:
             - RemoveRequestHeader=Cookie
             - RewritePath=/user-service/(?<segment>.*), /$\{segment} # /user-service/users/** 를 /users/**로 바꿔서 맵핑해준다. User MSA에서는 service 관련된 라우팅에 신경쓰지 않고 /users에 맵핑할 수 있다
-
+            - AuthorizationHeaderFilter
 
         - id: catalog-service
           uri: lb://CATALOG-SERVICE
           filters:
-            - CustomFilter
+#            - CustomFilter
 #            - AddRequestHeader=gateway, hello catalog
 #            - AddResponseHeader=gateway, bye catalog
           predicates:
             - Path=/catalogs/**
         - id: order-service
           uri: lb://ORDER-SERVICE
-          filters:
-            - CustomFilter
+#          filters:
+#            - CustomFilter
           predicates:
             - Path=/orders/**
-
 
 eureka:
   client:
@@ -64,3 +65,9 @@ eureka:
     fetch-registry: true
     service-url:
       defaultZone: http://localhost:8761/eureka
+
+
+token:
+  expiration-time: 86400000 # 하루
+  secret: abcdefgabcabcdefgdefgabcdefabcdefggabcdefgabcdefgabcabcdefgdefgabcdefabcdefggabcdefgcdefabcdefggabc # 512bit 이상
+
