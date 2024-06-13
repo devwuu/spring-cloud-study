@@ -11,6 +11,7 @@ import com.example.userservice.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext;
+import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -27,11 +28,20 @@ public class UserController {
 
     private final GreetingProperty prop;
     private final UserService service;
-    private final ServletWebServerApplicationContext context;
+//    private final ServletWebServerApplicationContext context;
+    private final Environment env;
 
     @GetMapping("/health_check")
     public String status(){
-        return String.format("User Service Is Working on port %s", context.getWebServer().getPort());
+        return String.format("User Service Is Working"
+                + ", local port : " + env.getProperty("local.server.port")
+                + ", server port : " + env.getProperty("server.port")
+                + ", token secret : " + env.getProperty("token.secret")
+                + ", token expiration time : " + env.getProperty("token.expiration-time")
+        );
+
+
+
     }
 
     @GetMapping("/welcome")
