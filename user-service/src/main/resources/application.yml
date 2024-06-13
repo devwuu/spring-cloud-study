@@ -19,10 +19,10 @@ spring:
     password:
 
 management:
-  endpoint:
+  endpoints:
     web:
       exposure:
-        include: refresh, health, beans
+        include: health, refresh, beans
 
 eureka:
   instance:

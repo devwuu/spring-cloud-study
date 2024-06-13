@@ -36,8 +36,8 @@ public class WebSecurityConfig {
                                 .requestMatchers(ApiPrefix.USER_PREFIX+"/health_check").permitAll()
                                 .requestMatchers(ApiPrefix.USER_PREFIX+"/welcome").permitAll()
                                 .requestMatchers(HttpMethod.POST, ApiPrefix.USER_PREFIX).permitAll()
-                                .requestMatchers("/actuator/**").permitAll()
-                                .anyRequest().authenticated()
+//                                .requestMatchers("/actuator/**").permitAll()
+                                .anyRequest().permitAll()
                 )
                 .addFilter(getAuthenticationFilter(environment, service, authenticationManager))
                 .headers(headersConfigurer ->
