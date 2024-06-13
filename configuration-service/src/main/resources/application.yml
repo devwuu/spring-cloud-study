@@ -12,3 +12,4 @@ spring:
           uri: https://github.com/devwuu/spring-cloud-study
           default-label: section/configuration
 #          http://localhost:8888/configuration/default
+#         remote git repo에 있는 configuration.yml 의 값을 읽어온다.
