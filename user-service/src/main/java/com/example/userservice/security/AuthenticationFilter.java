@@ -35,6 +35,9 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request,
                                                 HttpServletResponse response) throws AuthenticationException {
+
+        log.info("trying to authenticate");
+
         try {
             LoginRequest credential = new ObjectMapper().readValue(request.getInputStream(), LoginRequest.class);
             // 사용자 정보를 인증 받기 위한 token으로 만들기

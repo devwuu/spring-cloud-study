@@ -38,6 +38,9 @@ public class WebSecurityConfig {
                                 .requestMatchers(HttpMethod.POST, ApiPrefix.USER_PREFIX).permitAll()
                                 .requestMatchers("/actuator/**").permitAll()
                                 .anyRequest().authenticated()
+                        // user service 에서 인증이 이루어지지 않기 때문에 (gateway에서 authorization filter에서 이루어짐)
+                        // authenticated가 걸린 request들은 403 에러 발생
+                        // todo gateway 에서 넘어오는 request들은 모두 허용해주는 로직이 필요할 것으로 보임
                 )
                 .addFilter(getAuthenticationFilter(environment, service, authenticationManager))
                 .headers(headersConfigurer ->
