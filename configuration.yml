@@ -1,4 +1,3 @@
 token:
   expiration-time: 86400000 # 하루
-#  expiration-time: 999999999
-  secret: abcdefgabcabcdefgdefgabcdefabcdefggabcdefgabcdefgabcabcdefgdefgabcdefabcdefggabcdefgcdefabcdefggabc # 512bit 이상
+  secret: defaultdefaultdefaultdefaultdefaultdefaultdefaultdefaultdefaultdefaultdefaultdefaultdefaultdefaultdefault # 512bit 이상
