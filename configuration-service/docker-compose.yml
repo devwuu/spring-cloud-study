@@ -1,0 +1,13 @@
+services:
+  rabbitmq:
+    image: rabbitmq:3-management
+    volumes:
+      - "./rabbitmq/enabled_plugins:/etc/rabbitmq/enabled_plugins"
+    environment:
+      RABBITMQ_DEFAULT_USER: user
+      RABBITMQ_DEFAULT_PASS: password
+      RABBITMQ_ERLANG_COOKIE: myrabbitmq
+#      RABBITMQ_ENABLED_PLUGINS_FILE: ./rabbitmq/etc/enabled_plugins
+    ports:
+      - 15672:15672
+      - 5672:5672
