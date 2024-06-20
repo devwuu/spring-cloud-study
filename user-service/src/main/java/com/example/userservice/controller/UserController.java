@@ -38,6 +38,7 @@ public class UserController {
                 + ", server port : " + env.getProperty("server.port")
                 + ", token secret : " + env.getProperty("token.secret")
                 + ", token expiration time : " + env.getProperty("token.expiration-time")
+                + ", refresh : " + env.getProperty("refresh")
         );
 
 
