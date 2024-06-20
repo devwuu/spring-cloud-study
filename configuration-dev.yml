@@ -2,4 +2,4 @@ token:
   expiration-time: 86400000 # 하루
   secret: devdevdevdevdevdevdevdevdevdevdevdevdevdevdevdevdevdevdevdevdevdevdevdevdevdevdevdevdevdevdevdevdevdev # 512bit 이상
 
-refresh: renew
+refresh: updated
