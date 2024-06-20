@@ -5,6 +5,12 @@ spring:
   application:
     name: user-service
 
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: user
+    password: password
+
   h2:
     console:
       enabled: true
@@ -22,7 +28,7 @@ management:
   endpoints:
     web:
       exposure:
-        include: health, refresh, beans
+        include: health, refresh, beans, busrefresh
 
 eureka:
   instance:

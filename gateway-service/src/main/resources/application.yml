@@ -5,6 +5,12 @@ spring:
   application:
     name: gateway-service
 
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: user
+    password: password
+
   cloud:
     gateway:
       routes:
@@ -26,7 +32,16 @@ spring:
           filters:
             - RemoveRequestHeader=Cookie
             - RewritePath=/user-service/(?<segment>.*), /$\{segment}
-          
+
+        # actuator 관련
+        - id: user-service
+          uri: lb://USER-SERVICE
+          predicates:
+            - Path=/user-service/actuator/**
+            - Method=GET,POST
+          filters:
+            - RewritePath=/user-service/(?<segment>.*), /$\{segment} # /user-service/actuator/** 를 /actuator/**로 바꿔서 맵핑해준다. User MSA에서는 service 관련된 라우팅에 신경쓰지 않고 /users에 맵핑할 수 있다
+
           # 인증 필요
         - id: user-service
           uri: lb://USER-SERVICE
@@ -37,15 +52,6 @@ spring:
             - RemoveRequestHeader=Cookie
             - RewritePath=/user-service/(?<segment>.*), /$\{segment} # /user-service/users/** 를 /users/**로 바꿔서 맵핑해준다. User MSA에서는 service 관련된 라우팅에 신경쓰지 않고 /users에 맵핑할 수 있다
             - AuthorizationHeaderFilter
-
-        # actuator 관련
-        - id: user-service
-          uri: lb://USER-SERVICE
-          predicates:
-            - Path=/user-service/actuator/**
-            - Method=GET,POST
-          filters:
-            - RewritePath=/user-service/(?<segment>.*), /$\{segment} # /user-service/actuator/** 를 /actuator/**로 바꿔서 맵핑해준다. User MSA에서는 service 관련된 라우팅에 신경쓰지 않고 /users에 맵핑할 수 있다
 
           # 카탈로그 서비스
         - id: catalog-service
@@ -68,5 +74,5 @@ management:
   endpoints:
     web:
       exposure:
-        include: refresh, beans, health, httpexchanges
+        include: refresh, beans, health, httpexchanges, busrefresh
 

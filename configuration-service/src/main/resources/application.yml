@@ -5,6 +5,12 @@ spring:
   application:
     name: configuration-service
 
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: user
+    password: password
+
   cloud:
     config:
       server:
@@ -13,3 +19,9 @@ spring:
           default-label: section/configuration
 #          http://localhost:8888/configuration/default
 #         remote git repo에 있는 configuration.yml 의 값을 읽어온다.
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, busrefresh
