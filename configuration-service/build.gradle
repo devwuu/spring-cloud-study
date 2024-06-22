@@ -30,7 +30,7 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.amqp:spring-rabbit-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
-	implementation 'org.springframework.cloud:spring-cloud-config-server:4.1.1' // 버전 작성해줘야 함
+	implementation 'org.springframework.cloud:spring-cloud-config-server'
 }
 
 dependencyManagement {

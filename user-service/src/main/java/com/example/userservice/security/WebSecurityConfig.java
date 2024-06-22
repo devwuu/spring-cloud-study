@@ -28,8 +28,6 @@ import java.util.function.Supplier;
 @Slf4j
 public class WebSecurityConfig {
 
-    private final Environment env;
-
     @Bean
     public SecurityFilterChain filterChain(
             HttpSecurity http,
@@ -45,7 +43,7 @@ public class WebSecurityConfig {
 //                                .requestMatchers(ApiPrefix.USER_PREFIX+"/welcome").permitAll()
 //                                .requestMatchers(HttpMethod.POST, ApiPrefix.USER_PREFIX).permitAll()
 //                                .requestMatchers("/actuator/**").permitAll()
-                                .requestMatchers("/**").access((authentication, object) -> isGatewayIp(authentication, object)) // gateway에서 보낸 request들은 이미 인증 된 request이기 때문에 모두 허용함
+                                .requestMatchers("/**").access((authentication, object) -> isGatewayIp(environment, authentication, object)) // gateway에서 보낸 request들은 이미 인증 된 request이기 때문에 모두 허용함
                                 .anyRequest().authenticated() // user service로 바로 요청하는 모든 request 방어
                 )
                 .addFilter(getAuthenticationFilter(environment, service, authenticationManager))
@@ -76,7 +74,7 @@ public class WebSecurityConfig {
         return filter;
     }
 
-    private AuthorizationDecision isGatewayIp(Supplier<Authentication> authentication, RequestAuthorizationContext object){
+    private AuthorizationDecision isGatewayIp(Environment env, Supplier<Authentication> authentication, RequestAuthorizationContext object){
         HttpServletRequest request = object.getRequest();
         String remoteAddr = request.getRemoteAddr();
         return new AuthorizationDecision(env.getProperty("gateway.ip").matches(remoteAddr));
