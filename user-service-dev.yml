@@ -11,3 +11,6 @@ token:
   secret: devdevdevdevdevdevdevdevdevdevdevdevdevdevdevdevdevdevdevdevdevdevdevdevdevdevdevdevdevdevdevdevdevdev # 512bit 이상
 
 refresh: test
+
+gateway:
+  ip: 172.30.1.18
