@@ -13,4 +13,4 @@ token:
 refresh: test
 
 gateway:
-  ip: 172.30.1.18
+  ip: '{cipher}66dd8e9e7e8da804e1eadd52c29063ca149e49a29104f13b043acd984be397f9'
