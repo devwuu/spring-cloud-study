@@ -4,5 +4,6 @@ spring:
   cloud:
     config:
       uri: http://localhost:8888
-      name: configuration
-#     http://localhost:8888/configuration/default 의 속성값들을 가져온다
+      name: user-service
+#     http://localhost:8888/user-service/dev 의 속성값들을 가져온다
+#     http://localhost:8888/user-service/default 가 기본, 여기서 /dev, /default 는 profile 이다

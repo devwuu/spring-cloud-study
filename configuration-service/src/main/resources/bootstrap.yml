@@ -1,0 +1,4 @@
+
+# 대칭키 암호화에 사용될 키
+encrypt:
+  key: abcdabcdabcdabcdabcdabcdabcdabcdabcd1234567890
