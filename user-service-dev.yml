@@ -4,7 +4,7 @@ spring:
     driver-class-name: org.h2.Driver
     url: jdbc:h2:mem:testdb
     username: sa
-    password: '{cipher}c09728df5a8eaca7823f15b36774da91e79af11e8a0dcfb514d949601f907d50'
+    password: '{cipher}AQAYmITDdbSfhkp/qBj1oH3EJTES9NQwuBVo9csgotWZgt/UjcTIrZWouGaMrRDkVIA/TIcg0cCigOgTSOwx0xHN8wgX59DXzxAk2R4l1bg2pI2lqPepF4Cg+d/XwleLGqTtBpWLYVWLKk7Xo739tfUYLpvFoeW1TP7f7HEumexmm3H9/GqZTid0IVy/HV7kk4ax7kyvqP8ipbJgNN4kYvtjBNG4mkWs3/pbWT4LTsNeu8qO4nCBXmzxOX/glcn6Q8pBKbwo7jd/TIqhRuv86YYOQU/ysS4x2TRQQTdLvdL9lVhokHzFsisMpZyBSEmOF/VXHdmH6aggGRw9r0bKBZ3STMU/qr2drT6ZnxYH82sNfIVofJfwoDX/7KBrvnndfak='
 
 token:
   expiration-time: 86400000 # 하루
@@ -13,4 +13,4 @@ token:
 refresh: test
 
 gateway:
-  ip: '{cipher}66dd8e9e7e8da804e1eadd52c29063ca149e49a29104f13b043acd984be397f9'
+  ip: '{cipher}AQAnOglRv6DZakVaimPXrtU0VglTAERBgkNKgBlUqf2OZLGl0tiVr4rLEOlI2pbg0334tq1gdXE+U0ImVVpmK7bXsL+SStQ0u8Cs6yunHPOhpPFXg4ZPaIDBtPKs3Iq8o/AzrWeW/vUP/hJy8K8lgM/U9amB/pugZnILpyj+tu9ikglDTNhEb8KBmaTvS3h4MKNjBsqvWmuVBNXfOae9AFzRS8JRcLpOjjDcacRJmY8SCbYUnEjRBplHh11s7hK2m7x6I3MIXcJU0hSvJgjxYrpHl7ErqNpiNJM2F4WGrvHJ0GBQm3vcSWHTFc7qgP3zG+hA8K0OA/XnZ4TH1Jco6v+fRCo1S2RjXpNYQN3hjvDM88jzvySIif0+PZ7x6K1Dxz8='
