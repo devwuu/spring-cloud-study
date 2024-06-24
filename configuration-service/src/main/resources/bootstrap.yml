@@ -1,4 +1,10 @@
 
 # 대칭키 암호화에 사용될 키
+#encrypt:
+#  key: abcdabcdabcdabcdabcdabcdabcdabcdabcd1234567890
+
 encrypt:
-  key: abcdabcdabcdabcdabcdabcdabcdabcdabcd1234567890
+  key-store:
+    location: file://${user.home}/Desktop/secret/keystore/encryptKey.jks
+    password: qwerty1234
+    alias: encryptKey
