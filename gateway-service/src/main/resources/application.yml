@@ -58,6 +58,8 @@ spring:
           uri: lb://CATALOG-SERVICE
           predicates:
             - Path=/catalogs/**
+
+        # 주문 서비스
         - id: order-service
           uri: lb://ORDER-SERVICE
           predicates:
