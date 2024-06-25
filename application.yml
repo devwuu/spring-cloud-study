@@ -10,3 +10,6 @@ spring:
 token:
   expiration-time: 86400000 # 하루
   secret: '{cipher}AQAWr0XaAjS9WqwY46ncyQQEfAQVcfrJjxB0czVUHmewSjyODnDceftSgg3zRk8rq3D6zA0qF2c+MOKykfaFzqxLg048hVtShCTHup+lvJNNXuxFnKOwYnGMOTo8N1QIvWCwiLSt8QrzEf5qDPZPmpZNoiPs2o3Ez/+1Ny9HMWpTS2rlhvS5RhZGY/9hZQKPKx1wzX9DXJhbRqpHdaa4ty0jzHwMTwar4mOB6RrcsTYP+XBc1SwTwr1oAZfWNkTUFOIwQg/9FlZ5vdQ7k9bb5Ii6imPRMn364vZ1JiM15Y+tZlR/JXYBSRtYcgWHQfOkvcea9c/lm0qOOvCh5/8DDjju5FuMfNDHCYtOINXwvB76A+AbwWVKLByOKUlQSdILzbJXVrBnm7gUUAhkoCAL6A6QOMx2ardSWT5YLh9cHEaLk9JA6Wfpk+Wpt1CnO5OlPwnHZ/rhmwVwZw/qCzfMD8GyEra+AVQLVWNFAeyO9MRH6tcXkLZSPsmBTaSB6++QkpA=' # 512bit 이상
+
+api:
+  order-service: http://localhost:8000/orders
