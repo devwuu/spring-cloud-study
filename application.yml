@@ -1,6 +1,7 @@
 # 모든 서비스들이 공유하는 설정 정보가 된다
 
 spring:
+  # todo maria db 로 변경
   datasource:
     driver-class-name: org.h2.Driver
     url: jdbc:h2:mem:testdb
@@ -12,4 +13,5 @@ token:
   secret: '{cipher}AQAWr0XaAjS9WqwY46ncyQQEfAQVcfrJjxB0czVUHmewSjyODnDceftSgg3zRk8rq3D6zA0qF2c+MOKykfaFzqxLg048hVtShCTHup+lvJNNXuxFnKOwYnGMOTo8N1QIvWCwiLSt8QrzEf5qDPZPmpZNoiPs2o3Ez/+1Ny9HMWpTS2rlhvS5RhZGY/9hZQKPKx1wzX9DXJhbRqpHdaa4ty0jzHwMTwar4mOB6RrcsTYP+XBc1SwTwr1oAZfWNkTUFOIwQg/9FlZ5vdQ7k9bb5Ii6imPRMn364vZ1JiM15Y+tZlR/JXYBSRtYcgWHQfOkvcea9c/lm0qOOvCh5/8DDjju5FuMfNDHCYtOINXwvB76A+AbwWVKLByOKUlQSdILzbJXVrBnm7gUUAhkoCAL6A6QOMx2ardSWT5YLh9cHEaLk9JA6Wfpk+Wpt1CnO5OlPwnHZ/rhmwVwZw/qCzfMD8GyEra+AVQLVWNFAeyO9MRH6tcXkLZSPsmBTaSB6++QkpA=' # 512bit 이상
 
 api:
-  order-service: http://localhost:8000/orders
+#  order-service: http://localhost:8000/orders
+  order-service: http://order-service/orders
