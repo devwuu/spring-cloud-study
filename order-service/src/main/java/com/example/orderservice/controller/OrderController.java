@@ -60,7 +60,16 @@ public class OrderController {
     // todo path 고민...
     @GetMapping("/{userId}/orders")
     public ResponseEntity findByUserId(@PathVariable("userId") String userId){
-        List<OrderDTO> orders = service.findByUserId(userId);
+//        List<OrderDTO> orders = service.findByUserId(userId);  todo order 예제 데이터 추가 후 수정
+        OrderDTO testOrder = OrderDTO.builder()
+                .orderId("1")
+                .userId(userId)
+                .qty(10)
+                .productId("1")
+                .totalPrice(200000)
+                .unitPrice(2000)
+                .build();
+        List<OrderDTO> orders = List.of(testOrder);
         List<OrderResponse> responses = OrderMapper.INSTANCE.orderDTOToOrderRes(orders);
         return ResponseEntity.status(HttpStatus.OK).body(responses);
     }

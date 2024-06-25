@@ -1,10 +1,11 @@
 package com.example.orderservice.dto;
 
+import lombok.Builder;
 import lombok.Data;
 
 import java.time.LocalDate;
 
-@Data
+@Data @Builder
 public class OrderDTO {
 
     private String productId;
