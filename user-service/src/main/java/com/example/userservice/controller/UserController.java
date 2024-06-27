@@ -1,5 +1,6 @@
 package com.example.userservice.controller;
 
+import com.example.userservice.client.OrderServiceClient;
 import com.example.userservice.common.ApiPrefix;
 import com.example.userservice.dto.CreateUserRequest;
 import com.example.userservice.dto.OrderResponse;
@@ -34,7 +35,7 @@ public class UserController {
     private final UserService service;
 //    private final ServletWebServerApplicationContext context;
     private final Environment env;
-    private final RestTemplate restTemplate;
+    private final OrderServiceClient orderClient;
 
     @GetMapping("/health_check")
     public String status(){
@@ -45,9 +46,6 @@ public class UserController {
                 + ", token expiration time : " + env.getProperty("token.expiration-time")
                 + ", refresh : " + env.getProperty("refresh")
         );
-
-
-
     }
 
     @GetMapping("/welcome")
@@ -72,13 +70,8 @@ public class UserController {
     public ResponseEntity findByUserId(@PathVariable("id") String userId){
         UserDTO user = service.findByUserId(userId);
         UserResponse response = UserMapper.INSTANCE.userDTOToCreateUserRes(user);
-
-        String rootUrl = env.getProperty("api.order-service");
-        String order = String.format("%s/%s/orders",rootUrl, userId);
-        ResponseEntity<List<OrderResponse>> orderResponse = restTemplate.exchange(order, HttpMethod.GET, null, new ParameterizedTypeReference<List<OrderResponse>>() {});
-        List<OrderResponse> body = orderResponse.getBody();
-        response.setOrders(body);
-
+        List<OrderResponse> orderResponses = orderClient.findByUserId(userId);
+        response.setOrders(orderResponses);
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
