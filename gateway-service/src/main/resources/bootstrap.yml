@@ -2,7 +2,6 @@ spring:
   cloud:
     config:
       uri: http://localhost:8888
-      name: configuration
-#     http://localhost:8888/configuration/default 의 속성값들을 가져온다
+
   profiles:
     active: dev
