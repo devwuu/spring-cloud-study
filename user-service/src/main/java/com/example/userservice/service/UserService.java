@@ -1,8 +1,9 @@
 package com.example.userservice.service;
 
+import com.example.userservice.common.ApiExceptionCode;
 import com.example.userservice.dto.UserDTO;
 import com.example.userservice.entity.User;
-import com.example.userservice.exception.ApiException;
+import com.example.userservice.exception.CommonException;
 import com.example.userservice.mapper.UserMapper;
 import com.example.userservice.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -38,13 +39,13 @@ public class UserService implements UserDetailsService {
 
     public UserDTO findByUserId(String userId){
         Optional<User> optional = repository.findByUserId(userId);
-        User user = optional.orElseThrow(() -> new ApiException("Not Exist User"));
+        User user = optional.orElseThrow(() -> new CommonException(ApiExceptionCode.NotFound));
         return UserMapper.INSTANCE.userToUserDTO(user);
     }
 
     public UserDTO findByEmail(String email){
         Optional<User> optional = repository.findByEmail(email);
-        User user = optional.orElseThrow(() -> new ApiException("Not Exist User"));
+        User user = optional.orElseThrow(() -> new CommonException(ApiExceptionCode.NotFound));
         return UserMapper.INSTANCE.userToUserDTO(user);
     }
 
@@ -57,7 +58,7 @@ public class UserService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         // username == email
         Optional<User> optional = repository.findByEmail(username);
-        User user = optional.orElseThrow(() -> new ApiException("Not Exist User"));
+        User user = optional.orElseThrow(() -> new CommonException(ApiExceptionCode.NotFound));
 
         return new org.springframework.security.core.userdetails.User(
                 user.getEmail(), user.getEncryptedPwd(),

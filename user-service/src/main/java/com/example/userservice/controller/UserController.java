@@ -7,23 +7,15 @@ import com.example.userservice.dto.CreateUserRequest;
 import com.example.userservice.dto.OrderResponse;
 import com.example.userservice.dto.UserResponse;
 import com.example.userservice.dto.UserDTO;
-import com.example.userservice.exception.ApiException;
 import com.example.userservice.mapper.UserMapper;
 import com.example.userservice.property.GreetingProperty;
 import com.example.userservice.service.UserService;
-import feign.FeignException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext;
-import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.core.env.Environment;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 
@@ -71,12 +63,7 @@ public class UserController {
     public ApiResponse findByUserId(@PathVariable("id") String userId){
         UserDTO user = service.findByUserId(userId);
         UserResponse response = UserMapper.INSTANCE.userDTOToCreateUserRes(user);
-        List<OrderResponse> orderResponses = null;
-        try {
-            orderResponses = orderClient.findByUserId(userId);
-        }catch (FeignException e){
-            log.error(e.getMessage());
-        }
+        List<OrderResponse> orderResponses = orderClient.findByUserId(userId);
         response.setOrders(orderResponses);
         return ApiResponse.builder().status(200).data(response).build();
     }

@@ -1,8 +1,12 @@
 package com.example.userservice.common;
 
+import lombok.Getter;
+
+@Getter
 public enum ApiExceptionCode {
 
-    ValidationException(400, "parameter validation error");
+    ValidationException(400, "parameter validation error"),
+    NotFound(404, "not exist");
 
     Integer code;
     String message;

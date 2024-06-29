@@ -1,8 +1,9 @@
 package com.example.userservice.security;
 
+import com.example.userservice.common.ApiExceptionCode;
 import com.example.userservice.dto.LoginRequest;
 import com.example.userservice.dto.UserDTO;
-import com.example.userservice.exception.ApiException;
+import com.example.userservice.exception.CommonException;
 import com.example.userservice.service.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.Jwts;
@@ -23,7 +24,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -46,7 +46,7 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
             return authenticate;
 
         } catch (IOException e) {
-            throw new ApiException("Cannot Read LoginRequest", e);
+            throw new CommonException(ApiExceptionCode.ValidationException, e); // parameter 맵핑 실패
         }
 
     }
