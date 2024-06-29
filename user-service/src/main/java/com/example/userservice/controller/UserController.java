@@ -2,6 +2,7 @@ package com.example.userservice.controller;
 
 import com.example.userservice.client.OrderServiceClient;
 import com.example.userservice.common.ApiPrefix;
+import com.example.userservice.common.ApiResponse;
 import com.example.userservice.dto.CreateUserRequest;
 import com.example.userservice.dto.OrderResponse;
 import com.example.userservice.dto.UserResponse;
@@ -10,6 +11,7 @@ import com.example.userservice.exception.ApiException;
 import com.example.userservice.mapper.UserMapper;
 import com.example.userservice.property.GreetingProperty;
 import com.example.userservice.service.UserService;
+import feign.FeignException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext;
@@ -54,32 +56,37 @@ public class UserController {
     }
 
     @PostMapping("")
-    public ResponseEntity create(@RequestBody @Validated CreateUserRequest request,
+    public ApiResponse create(@RequestBody @Validated CreateUserRequest request,
                                  BindingResult bindingResult){
         if(bindingResult.hasErrors()){
-            log.info("binding error : {}", bindingResult.toString()); // todo binding exception return 해주는 로직
-            throw new ApiException("binding error");
+            ApiResponse.validationError(bindingResult);
         }
         UserDTO userDTO = UserMapper.INSTANCE.createUserReqToUserDTO(request);
         UserDTO saved = service.create(userDTO);
         UserResponse response = UserMapper.INSTANCE.userDTOToCreateUserRes(saved);
-        return ResponseEntity.status(HttpStatus.CREATED).body(response);
+        return ApiResponse.builder().status(201).data(response).build();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity findByUserId(@PathVariable("id") String userId){
+    public ApiResponse findByUserId(@PathVariable("id") String userId){
         UserDTO user = service.findByUserId(userId);
         UserResponse response = UserMapper.INSTANCE.userDTOToCreateUserRes(user);
-        List<OrderResponse> orderResponses = orderClient.findByUserId(userId);
+        List<OrderResponse> orderResponses = null;
+        try {
+            orderResponses = orderClient.findByUserId(userId);
+        }catch (FeignException e){
+            log.error(e.getMessage());
+        }
         response.setOrders(orderResponses);
-        return ResponseEntity.status(HttpStatus.OK).body(response);
+        return ApiResponse.builder().status(200).data(response).build();
     }
 
     @GetMapping("")
-    public ResponseEntity findAll(){
+    public ApiResponse findAll(){
         List<UserDTO> all = service.findAll();
         List<UserResponse> responses = UserMapper.INSTANCE.userDTOToCreateUserRes(all);
-        return ResponseEntity.status(HttpStatus.OK).body(responses);
+        return ApiResponse.builder().status(200).data(responses).build();
+
     }
 
 

@@ -1,6 +1,26 @@
 services:
 
-  # todo maria db 추가
+  user-service-db:
+    image: mariadb
+    restart: always
+    ports:
+      - 3306:3306
+    environment:
+      MARIADB_ROOT_PASSWORD: qwerty
+      MARIADB_DATABASE: user_sys
+    volumes:
+      - "./db/user:/var/lib/mysql"
+
+  order-service-db:
+    image: mariadb
+    restart: always
+    ports:
+      - 3307:3306
+    environment:
+      MARIADB_ROOT_PASSWORD: qwerty
+      MARIADB_DATABASE: order_sys
+    volumes:
+      - "./db/order:/var/lib/mysql"
 
   rabbitmq:
     image: rabbitmq:3-management

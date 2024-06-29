@@ -1,17 +1,4 @@
 # 모든 서비스들이 공유하는 설정 정보가 된다
-
-spring:
-  # todo maria db 로 변경
-  datasource:
-    driver-class-name: org.h2.Driver
-    url: jdbc:h2:mem:testdb
-    username: sa
-    password: '{cipher}AQAYmITDdbSfhkp/qBj1oH3EJTES9NQwuBVo9csgotWZgt/UjcTIrZWouGaMrRDkVIA/TIcg0cCigOgTSOwx0xHN8wgX59DXzxAk2R4l1bg2pI2lqPepF4Cg+d/XwleLGqTtBpWLYVWLKk7Xo739tfUYLpvFoeW1TP7f7HEumexmm3H9/GqZTid0IVy/HV7kk4ax7kyvqP8ipbJgNN4kYvtjBNG4mkWs3/pbWT4LTsNeu8qO4nCBXmzxOX/glcn6Q8pBKbwo7jd/TIqhRuv86YYOQU/ysS4x2TRQQTdLvdL9lVhokHzFsisMpZyBSEmOF/VXHdmH6aggGRw9r0bKBZ3STMU/qr2drT6ZnxYH82sNfIVofJfwoDX/7KBrvnndfak='
-
 token:
   expiration-time: 86400000 # 하루
   secret: '{cipher}AQAWr0XaAjS9WqwY46ncyQQEfAQVcfrJjxB0czVUHmewSjyODnDceftSgg3zRk8rq3D6zA0qF2c+MOKykfaFzqxLg048hVtShCTHup+lvJNNXuxFnKOwYnGMOTo8N1QIvWCwiLSt8QrzEf5qDPZPmpZNoiPs2o3Ez/+1Ny9HMWpTS2rlhvS5RhZGY/9hZQKPKx1wzX9DXJhbRqpHdaa4ty0jzHwMTwar4mOB6RrcsTYP+XBc1SwTwr1oAZfWNkTUFOIwQg/9FlZ5vdQ7k9bb5Ii6imPRMn364vZ1JiM15Y+tZlR/JXYBSRtYcgWHQfOkvcea9c/lm0qOOvCh5/8DDjju5FuMfNDHCYtOINXwvB76A+AbwWVKLByOKUlQSdILzbJXVrBnm7gUUAhkoCAL6A6QOMx2ardSWT5YLh9cHEaLk9JA6Wfpk+Wpt1CnO5OlPwnHZ/rhmwVwZw/qCzfMD8GyEra+AVQLVWNFAeyO9MRH6tcXkLZSPsmBTaSB6++QkpA=' # 512bit 이상
-
-api:
-#  order-service: http://localhost:8000/orders
-  order-service: http://order-service/orders # order-service는 user-service에서 해당 아이디를 가진 유레카 클라이언트로 치환된다

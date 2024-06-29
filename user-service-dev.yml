@@ -1,4 +1,10 @@
 #refresh: test
+spring:
+  datasource:
+    driver-class-name: org.mariadb.jdbc.Driver
+    url: jdbc:mariadb://localhost:3306/user_sys
+    username: root
+    password: qwerty
 
 gateway:
   ip: '{cipher}AQAnOglRv6DZakVaimPXrtU0VglTAERBgkNKgBlUqf2OZLGl0tiVr4rLEOlI2pbg0334tq1gdXE+U0ImVVpmK7bXsL+SStQ0u8Cs6yunHPOhpPFXg4ZPaIDBtPKs3Iq8o/AzrWeW/vUP/hJy8K8lgM/U9amB/pugZnILpyj+tu9ikglDTNhEb8KBmaTvS3h4MKNjBsqvWmuVBNXfOae9AFzRS8JRcLpOjjDcacRJmY8SCbYUnEjRBplHh11s7hK2m7x6I3MIXcJU0hSvJgjxYrpHl7ErqNpiNJM2F4WGrvHJ0GBQm3vcSWHTFc7qgP3zG+hA8K0OA/XnZ4TH1Jco6v+fRCo1S2RjXpNYQN3hjvDM88jzvySIif0+PZ7x6K1Dxz8='
