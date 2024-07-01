@@ -8,6 +8,7 @@ import com.example.orderservice.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -21,6 +22,7 @@ public class OrderService {
     public OrderDTO save(OrderDTO order) {
         order.setOrderId(UUID.randomUUID().toString());
         order.setTotalPrice(order.getQty() * order.getUnitPrice());
+        order.setCreatedAt(LocalDate.now());
         Order entity = OrderMapper.INSTANCE.orderDTOToOrder(order);
         Order saved = repository.saveAndFlush(entity);
         return OrderMapper.INSTANCE.orderToOrderDTO(saved);

@@ -63,8 +63,8 @@ public class UserController {
     public ApiResponse findByUserId(@PathVariable("id") String userId){
         UserDTO user = service.findByUserId(userId);
         UserResponse response = UserMapper.INSTANCE.userDTOToCreateUserRes(user);
-        List<OrderResponse> orderResponses = orderClient.findByUserId(userId);
-        response.setOrders(orderResponses);
+        ApiResponse<List<OrderResponse>> orderResponses = orderClient.findByUserId(userId);
+        response.setOrders(orderResponses.getData());
         return ApiResponse.builder().status(200).data(response).build();
     }
 

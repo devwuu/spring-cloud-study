@@ -1,5 +1,6 @@
 package com.example.userservice.client;
 
+import com.example.userservice.common.ApiResponse;
 import com.example.userservice.dto.OrderResponse;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Component;
@@ -12,6 +13,6 @@ import java.util.List;
 public interface OrderServiceClient {
 
     @GetMapping("/orders/{userId}/orders")
-    List<OrderResponse> findByUserId(@PathVariable String userId);
+    ApiResponse<List<OrderResponse>> findByUserId(@PathVariable String userId);
 
 }
