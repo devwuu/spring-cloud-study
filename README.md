@@ -7,7 +7,7 @@
 * gateway service 서버
 * 유레카 클라이언트 서버
 
-# kafka 
+# kafka Consumer - Producer 예제
 * docker ps 
   * 컨테이너 아이디 조회
 * docker exec -it {컨테이너ID} /bin/bash
@@ -51,5 +51,34 @@ I have no name!@6a9a253f2c5f:/opt/bitnami/kafka/bin$ kafka-console-producer.sh -
 I have no name!@6a9a253f2c5f:/opt/bitnami/kafka/bin$ kafka-console-consumer.sh --bootstrap-server  localhost:9092 --topic hello-world-events --from-beginning
 hello, world!
 hi, there!
+```
 
+# Kafka Connect 예제
+* Kafka Connect 설정 파일 위치
+  * /opt/bitnami/kafka/config
+
+```zsh
+I have no name!@e8c7212922b5:/opt/bitnami/kafka/config$ ls
+connect-console-sink.properties    connect-file-source.properties   consumer.properties  server.properties	     zookeeper.properties
+connect-console-source.properties  connect-log4j.properties	    kraft		 server.properties.original
+connect-distributed.properties	   connect-mirror-maker.properties  log4j.properties	 tools-log4j.properties
+connect-file-sink.properties	   connect-standalone.properties    producer.properties  trogdor.conf
+
+```
+
+```zsh
+I have no name!@667e24813161:/opt/bitnami/kafka/config$ connect-distributed.sh
+USAGE: /opt/bitnami/kafka/bin/connect-distributed.sh [-daemon] connect-distributed.properties
+I have no name!@667e24813161:/opt/bitnami/kafka/config$ connect-distributed.sh connect-distributed.properties
+```
+
+```zsh
+I have no name!@667e24813161:/opt/bitnami/kafka/bin$ kafka-topics.sh --bootstrap-server localhost:9092 --list
+__consumer_offsets
+connect-configs
+connect-offsets
+connect-status
+hello-world-events
+new-topic
+quickstart-events
 ```
