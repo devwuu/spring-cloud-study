@@ -7,78 +7,9 @@
 * gateway service 서버
 * 유레카 클라이언트 서버
 
-# kafka Consumer - Producer 예제
-* docker ps 
-  * 컨테이너 아이디 조회
-* docker exec -it {컨테이너ID} /bin/bash
-  * 컨테이너 접속
-* https://github.com/bitnami/containers/blob/main/bitnami/kafka/README.md#example-create-a-replicated-topic
-  * bin 폴더 위치
-
-
-```zsh
-I have no name!@4e13e1ea7a5c:/opt/bitnami/kafka/bin$ ls
-connect-distributed.sh	      kafka-console-consumer.sh    kafka-get-offsets.sh		 kafka-replica-verification.sh	     kafka-verifiable-producer.sh
-connect-mirror-maker.sh       kafka-console-producer.sh    kafka-jmx.sh			 kafka-run-class.sh		     trogdor.sh
-connect-plugin-path.sh	      kafka-consumer-groups.sh	   kafka-leader-election.sh	 kafka-server-start.sh		     windows
-connect-standalone.sh	      kafka-consumer-perf-test.sh  kafka-log-dirs.sh		 kafka-server-stop.sh		     zookeeper-security-migration.sh
-kafka-acls.sh		      kafka-delegation-tokens.sh   kafka-metadata-quorum.sh	 kafka-storage.sh		     zookeeper-server-start.sh
-kafka-broker-api-versions.sh  kafka-delete-records.sh	   kafka-metadata-shell.sh	 kafka-streams-application-reset.sh  zookeeper-server-stop.sh
-kafka-client-metrics.sh       kafka-dump-log.sh		   kafka-mirror-maker.sh	 kafka-topics.sh		     zookeeper-shell.sh
-kafka-cluster.sh	      kafka-e2e-latency.sh	   kafka-producer-perf-test.sh	 kafka-transactions.sh
-kafka-configs.sh	      kafka-features.sh		   kafka-reassign-partitions.sh  kafka-verifiable-consumer.sh
-```
-
-```zsh
-I have no name!@6a9a253f2c5f:/opt/bitnami/kafka/bin$ kafka-topics.sh --bootstrap-server localhost:9092 --list
-__consumer_offsets
-new-topic
-quickstart-events
-```
-
-```zsh
-I have no name!@6a9a253f2c5f:/opt/bitnami/kafka/bin$ kafka-topics.sh --bootstrap-server localhost:9092 --create --topic hello-world-events --partitions 1
-Created topic hello-world-events.
-```
-
-```zsh
-I have no name!@6a9a253f2c5f:/opt/bitnami/kafka/bin$ kafka-console-producer.sh --broker-list localhost:9092 --topic hello-world-events
->hello, world!
->hi, there!
-```
-
-```zsh
-I have no name!@6a9a253f2c5f:/opt/bitnami/kafka/bin$ kafka-console-consumer.sh --bootstrap-server  localhost:9092 --topic hello-world-events --from-beginning
-hello, world!
-hi, there!
-```
-
-# Kafka Connect 예제
-* Kafka Connect 설정 파일 위치
-  * /opt/bitnami/kafka/config
-
-```zsh
-I have no name!@e8c7212922b5:/opt/bitnami/kafka/config$ ls
-connect-console-sink.properties    connect-file-source.properties   consumer.properties  server.properties	     zookeeper.properties
-connect-console-source.properties  connect-log4j.properties	    kraft		 server.properties.original
-connect-distributed.properties	   connect-mirror-maker.properties  log4j.properties	 tools-log4j.properties
-connect-file-sink.properties	   connect-standalone.properties    producer.properties  trogdor.conf
-
-```
-
-```zsh
-I have no name!@667e24813161:/opt/bitnami/kafka/config$ connect-distributed.sh
-USAGE: /opt/bitnami/kafka/bin/connect-distributed.sh [-daemon] connect-distributed.properties
-I have no name!@667e24813161:/opt/bitnami/kafka/config$ connect-distributed.sh connect-distributed.properties
-```
-
-```zsh
-I have no name!@667e24813161:/opt/bitnami/kafka/bin$ kafka-topics.sh --bootstrap-server localhost:9092 --list
-__consumer_offsets
-connect-configs
-connect-offsets
-connect-status
-hello-world-events
-new-topic
-quickstart-events
-```
+# kafka 예제
+* 공식 문서
+  * https://docs.confluent.io/platform/current/installation/docker/config-reference.html
+  * https://github.com/confluentinc/cp-all-in-one/blob/7.6.1-post/cp-all-in-one/docker-compose.yml
+* 참고 문서
+  * https://velog.io/@ksh9409255/카프카-커넥트

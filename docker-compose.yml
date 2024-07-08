@@ -44,6 +44,8 @@ services:
 
   kafka:
     image: confluentinc/cp-server:latest
+    hostname: broker
+    container_name: broker
     depends_on:
       - zookeeper
     ports:
@@ -68,3 +70,26 @@ services:
       CONFLUENT_METRICS_ENABLE: 'true'
       CONFLUENT_SUPPORT_CUSTOMER_ID: 'anonymous'
 
+#    connector:
+#      image: confluentinc/cp-kafka-connect:7.0.1
+#      ports:
+#        - 8083:8083
+#      environment:
+#        CONNECT_BOOTSTRAP_SERVERS: broker:29092
+#        CONNECT_REST_PORT: 8083
+#        CONNECT_GROUP_ID: "quickstart-connect"
+#        CONNECT_CONFIG_STORAGE_TOPIC: "quickstart-connect-config"
+#        CONNECT_OFFSET_STORAGE_TOPIC: "quickstart-connect-offsets"
+#        CONNECT_STATUS_STORAGE_TOPIC: "quickstart-connect-status"
+#        CONNECT_CONFIG_STORAGE_REPLICATION_FACTOR: 1
+#        CONNECT_OFFSET_STORAGE_REPLICATION_FACTOR: 1
+#        CONNECT_STATUS_STORAGE_REPLICATION_FACTOR: 1
+#        CONNECT_KEY_CONVERTER: "org.apache.kafka.connect.json.JsonConverter"
+#        CONNECT_VALUE_CONVERTER: "org.apache.kafka.connect.json.JsonConverter"
+#        CONNECT_INTERNAL_KEY_CONVERTER: "org.apache.kafka.connect.json.JsonConverter"
+#        CONNECT_INTERNAL_VALUE_CONVERTER: "org.apache.kafka.connect.json.JsonConverter"
+#        CONNECT_REST_ADVERTISED_HOST_NAME: "localhost"
+#        CONNECT_LOG4J_ROOT_LOGLEVEL: DEBUG
+#        CONNECT_PLUGIN_PATH: "/usr/share/java,/etc/kafka-connect/jars"
+#      volumes:
+#        - ./confluent/confluentinc-kafka-connect-jdbc/lib:/etc/kafka-connect/jars
