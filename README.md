@@ -11,5 +11,6 @@
 * 공식 문서
   * https://docs.confluent.io/platform/current/installation/docker/config-reference.html
   * https://github.com/confluentinc/cp-all-in-one/blob/7.6.1-post/cp-all-in-one/docker-compose.yml
+  * https://github.com/confluentinc/demo-scene/blob/master/kafka-connect-zero-to-hero/docker-compose.yml#L82-L87
 * 참고 문서
   * https://velog.io/@ksh9409255/카프카-커넥트
