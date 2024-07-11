@@ -75,6 +75,9 @@ services:
     platform: linux/arm64/v8
     ports:
       - 8083:8083
+    depends_on:
+      - user-service-db
+      - order-service-db
     environment:
       CONNECT_BOOTSTRAP_SERVERS: broker:29092
       CONNECT_REST_PORT: 8083
@@ -92,10 +95,6 @@ services:
       CONNECT_REST_ADVERTISED_HOST_NAME: "localhost"
       CONNECT_LOG4J_ROOT_LOGLEVEL: DEBUG
       CONNECT_PLUGIN_PATH: /usr/share/java,/usr/share/confluent-hub-components,/data/connect-jars
-
-#      CONNECT_PLUGIN_PATH: "/usr/share/java,/usr/share/confluent-hub-components"
-#      CONNECT_PLUGIN_PATH: "/usr/share/java,/etc/kafka-connect/jars"
     volumes:
-      - ./confluent/connect/connector/lib:/usr/share/confluent-hub-components
-      - ./confluent/connect/mysql:/data/connect-jars
-#      - ./confluent/confluentinc-kafka-connect-mysql:/usr/share/java/kafka
+      - ./confluent/connect/connector/confluentinc-kafka-connect-jdbc/lib:/usr/share/confluent-hub-components
+      - ./confluent/connect/mysql:/etc/kafka-connect/jars
