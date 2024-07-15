@@ -14,23 +14,49 @@
   * https://github.com/confluentinc/demo-scene/blob/master/kafka-connect-zero-to-hero/docker-compose.yml#L82-L87
 * 참고 문서
   * https://velog.io/@ksh9409255/카프카-커넥트
+  * https://velog.io/@dm911/Kafka-Spooldir-Source-Connector
 * connector 등록 예제
   ```json
-    {
-      "name" : "quickstart-connector",
-      "config" : {
-        "connector.class" : "io.confluent.connect.jdbc.JdbcSourceConnector",
-        "connection.url" : "jdbc:mariadb://user-service-db:3306/user_sys",
-        "connection.user" : "root",
-        "connection.password" : "qwerty",
-        "mode": "incrementing",
-        "incrementing.column.name" : "id",
-        "table.whitelist" : "member",
-        "topic.prefix" : "quickstart_",
-        "tasks.max" : "1"
-      }
+
+  {
+  "name": "jdbc-source-connector",
+  "config": {
+      "connector.class": "io.confluent.connect.jdbc.JdbcSourceConnector",
+      "tasks.max": "1",
+      "connection.url": "jdbc:mariadb://user-service-db:3306/user_sys",
+      "connection.user": "root",
+      "connection.password": "qwerty",
+      "mode": "incrementing",
+      "incrementing.column.name": "id",
+      "topic.prefix": "my_topic_",
+      "poll.interval.ms": "10",
+      "table.whitelist" : "member"
     }
+  }
   ```
+
+  ```json
+
+  {
+    "name": "jdbc-sink-connector",
+    "config": {
+      "connector.class": "io.confluent.connect.jdbc.JdbcSinkConnector",
+      "tasks.max": "1",
+      "topics": "my_topic_member",
+      "connection.url": "jdbc:mariadb://user-service-db:3306/user_sys",
+      "connection.user": "root",
+      "connection.password": "qwerty",
+      "auto.create": "true",
+      "auto.evolve": "true",
+      "key.converter": "org.apache.kafka.connect.json.JsonConverter",
+      "value.converter": "org.apache.kafka.connect.json.JsonConverter",
+      "table.name.format": "my_topic_member",
+      "insert.mode": "insert",
+      "pk.mode": "none"
+    }
+  }
+  ```
+
 
 * kafka 명령어 예제
   ```zsh
