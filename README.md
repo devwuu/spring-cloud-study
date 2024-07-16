@@ -17,7 +17,6 @@
   * https://velog.io/@dm911/Kafka-Spooldir-Source-Connector
 * connector 등록 예제
   ```json
-
   {
   "name": "jdbc-source-connector",
   "config": {
@@ -28,7 +27,7 @@
       "connection.password": "qwerty",
       "mode": "incrementing",
       "incrementing.column.name": "id",
-      "topic.prefix": "my_topic_",
+      "topic.prefix": "user_sys_", // topic 이름은 prefix+whitelist == user_sys_member
       "poll.interval.ms": "10",
       "table.whitelist" : "member"
     }
@@ -36,21 +35,20 @@
   ```
 
   ```json
-
   {
     "name": "jdbc-sink-connector",
     "config": {
       "connector.class": "io.confluent.connect.jdbc.JdbcSinkConnector",
       "tasks.max": "1",
-      "topics": "my_topic_member",
+      "topics": "user_sys_member", // 연결할 topic, source connector에서 생성한 topic 이름과 동일해야 함
       "connection.url": "jdbc:mariadb://user-service-db:3306/user_sys",
       "connection.user": "root",
       "connection.password": "qwerty",
-      "auto.create": "true",
+      "auto.create": "true", // table을 자동 생성
       "auto.evolve": "true",
       "key.converter": "org.apache.kafka.connect.json.JsonConverter",
       "value.converter": "org.apache.kafka.connect.json.JsonConverter",
-      "table.name.format": "my_topic_member",
+      "table.name.format": "user_sync", // table 이름, default는 topics
       "insert.mode": "insert",
       "pk.mode": "none"
     }
