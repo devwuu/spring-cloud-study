@@ -22,6 +22,17 @@ services:
     volumes:
       - "./db/order:/var/lib/mysql"
 
+  catalog-service-db:
+    image: mariadb
+    restart: always
+    ports:
+      - 3308:3306
+    environment:
+      MARIADB_ROOT_PASSWORD: qwerty
+      MARIADB_DATABASE: catalog_sys
+    volumes:
+      - "./db/order:/var/lib/mysql"
+
   rabbitmq:
     image: rabbitmq:3-management
     restart: always
@@ -77,6 +88,7 @@ services:
     depends_on:
       - user-service-db
       - order-service-db
+      - catalog-service-db
       - broker-1
     environment:
       CONNECT_BOOTSTRAP_SERVERS: "broker-1:29092"
