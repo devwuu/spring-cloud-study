@@ -1,5 +1,6 @@
 package com.example.catalogservice.controller;
 
+import com.example.catalogservice.common.ApiPrefix;
 import com.example.catalogservice.dto.CatalogDTO;
 import com.example.catalogservice.dto.CatalogResponse;
 import com.example.catalogservice.mapper.CatalogMapper;
@@ -15,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/catalogs")
+@RequestMapping(ApiPrefix.CATALOG_PREFIX)
 @RequiredArgsConstructor
 public class CatalogController {
 

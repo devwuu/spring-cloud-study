@@ -57,13 +57,20 @@ spring:
         - id: catalog-service
           uri: lb://CATALOG-SERVICE
           predicates:
-            - Path=/catalogs/**
+            - Path=/catalog-service/**
+          filters:
+            - RemoveRequestHeader=Cookie
+            - RewritePath=/catalog-service/(?<segment>.*), /$\{segment} # /user-service/users/** 를 /users/**로 바꿔서 맵핑해준다. User MSA에서는 service 관련된 라우팅에 신경쓰지 않고 /users에 맵핑할 수 있다
 
         # 주문 서비스
         - id: order-service
           uri: lb://ORDER-SERVICE
           predicates:
-            - Path=/orders/**
+            - Path=/order-service/**
+          filters:
+            - RemoveRequestHeader=Cookie
+            - RewritePath=/order-service/(?<segment>.*), /$\{segment} # /user-service/users/** 를 /users/**로 바꿔서 맵핑해준다. User MSA에서는 service 관련된 라우팅에 신경쓰지 않고 /users에 맵핑할 수 있다
+
 
 eureka:
   client:

@@ -1,5 +1,7 @@
 package com.example.catalogservice.entity;
 
+import com.example.catalogservice.common.ApiExceptionCode;
+import com.example.catalogservice.exception.ApiException;
 import jakarta.persistence.*;
 import lombok.Data;
 import org.hibernate.annotations.ColumnDefault;
@@ -30,6 +32,13 @@ public class Catalog {
     @ColumnDefault(value = "CURRENT_TIMESTAMP")
     private LocalDate createdAt;
 
+    public Catalog reduce(Integer qty){
+        if(this.stock < qty) {
+            throw new ApiException(ApiExceptionCode.OutOfStock);
+        }
+        this.stock -= qty;
+        return this;
+    }
 
 
 

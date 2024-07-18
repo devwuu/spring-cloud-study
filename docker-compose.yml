@@ -31,7 +31,7 @@ services:
       MARIADB_ROOT_PASSWORD: qwerty
       MARIADB_DATABASE: catalog_sys
     volumes:
-      - "./db/order:/var/lib/mysql"
+      - "./db/catalog:/var/lib/mysql"
 
   rabbitmq:
     image: rabbitmq:3-management

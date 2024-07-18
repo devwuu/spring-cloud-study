@@ -1,4 +1,4 @@
-package com.example.orderservice.common;
+package com.example.catalogservice.common;
 
 import lombok.Getter;
 
@@ -7,7 +7,9 @@ public enum ApiExceptionCode {
 
     ValidationException(400, "parameter validation error"),
     NotFound(404, "not exist"),
-    SerializeFail(400, "cannot serialize");
+    DeserializeFail(400, "data cannot be deserialize"),
+
+    OutOfStock(400, "sold out");
 
     Integer code;
     String message;

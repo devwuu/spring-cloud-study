@@ -7,6 +7,7 @@ import com.example.orderservice.dto.OrderDTO;
 import com.example.orderservice.dto.OrderResponse;
 import com.example.orderservice.exception.ApiException;
 import com.example.orderservice.mapper.OrderMapper;
+import com.example.orderservice.messageque.KafkaProducer;
 import com.example.orderservice.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -27,6 +28,7 @@ public class OrderController {
 
     private final Environment env;
     private final OrderService service;
+    private final KafkaProducer producer;
 
     @GetMapping("/health_check")
     public String healthCheck(){
@@ -50,10 +52,17 @@ public class OrderController {
         if(bindingResult.hasErrors()){
             return ApiResponse.validationError(bindingResult);
         }
+
+        // 신규 주문 등록
         OrderDTO orderDTO = OrderMapper.INSTANCE.orderReqToOrderDTO(request);
         orderDTO.setUserId(userId);
         OrderDTO save = service.save(orderDTO);
         OrderResponse response = OrderMapper.INSTANCE.orderDTOToOrderRes(save);
+
+        // send order to broker
+        // todo 이렇게 되면 재고 확인이 나중에 이루어지게 되는데.. transaction 관리가 필요하다 => SAGA pattern
+        producer.send("new_order_topic", save); // consumer 에서 바라보고 있는 topic과 같은 topic으로
+
         return ApiResponse.builder().status(201).data(response).build();
     }
 
