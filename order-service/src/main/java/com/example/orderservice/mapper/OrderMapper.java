@@ -1,7 +1,7 @@
 package com.example.orderservice.mapper;
 
 import com.example.orderservice.dto.CreateOrderRequest;
-import com.example.orderservice.dto.OrderDTO;
+import com.example.orderservice.dto.OrderDto;
 import com.example.orderservice.dto.OrderResponse;
 import com.example.orderservice.entity.Order;
 import org.mapstruct.Mapper;
@@ -14,15 +14,15 @@ public interface OrderMapper {
 
     OrderMapper INSTANCE = Mappers.getMapper(OrderMapper.class);
 
-    Order orderDTOToOrder(OrderDTO orderDTO);
+    Order orderDtoToOrder(OrderDto orderDTO);
 
-    OrderDTO orderToOrderDTO(Order order);
-    List<OrderDTO> orderToOrderDTO(List<Order> order);
+    OrderDto orderToOrderDto(Order order);
+    List<OrderDto> orderToOrderDto(List<Order> order);
 
-    OrderDTO orderReqToOrderDTO(CreateOrderRequest request);
+    OrderDto orderReqToOrderDto(CreateOrderRequest request);
 
-    OrderResponse orderDTOToOrderRes(OrderDTO orderDTO);
-    List<OrderResponse> orderDTOToOrderRes(List<OrderDTO> orderDTO);
+    OrderResponse orderDtoToOrderRes(OrderDto orderDTO);
+    List<OrderResponse> orderDtoToOrderRes(List<OrderDto> orderDTO);
 
 
 

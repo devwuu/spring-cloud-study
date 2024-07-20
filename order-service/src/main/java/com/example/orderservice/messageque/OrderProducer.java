@@ -1,31 +1,36 @@
 package com.example.orderservice.messageque;
 
 import com.example.orderservice.common.ApiExceptionCode;
+import com.example.orderservice.dto.KafkaField;
 import com.example.orderservice.dto.OrderDto;
 import com.example.orderservice.exception.ApiException;
-import com.example.orderservice.repository.OrderRepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Map;
-import java.util.Optional;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class KafkaProducer {
+public class OrderProducer {
 
     private final KafkaTemplate<String, String> template;
+    private final ObjectMapper mapper;
+    private final List<KafkaField> FIELDS = List.of(
+        new KafkaField("string", false, "order_id"),
+        new KafkaField("string", false, "order_id"),
+        new KafkaField("string", false, "order_id"),
+        new KafkaField("string", false, "order_id"),
+        new KafkaField("string", false, "order_id"),
+        new KafkaField("string", false, "order_id"),
+        new KafkaField("string", false, "order_id")
+    );
 
     public OrderDto send(String topic, OrderDto dto){
-        ObjectMapper mapper = new ObjectMapper();
         String stringify = "";
         try {
             stringify = mapper.writeValueAsString(dto);

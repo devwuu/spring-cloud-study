@@ -40,7 +40,7 @@ spring:
             - Path=/user-service/actuator/**
             - Method=GET,POST
           filters:
-            - RewritePath=/user-service/(?<segment>.*), /$\{segment} # /user-service/actuator/** 를 /actuator/**로 바꿔서 맵핑해준다. User MSA에서는 service 관련된 라우팅에 신경쓰지 않고 /users에 맵핑할 수 있다
+            - RewritePath=/user-service/(?<segment>.*), /$\{segment}
 
           # 인증 필요
         - id: user-service
@@ -50,7 +50,7 @@ spring:
             - Method=GET
           filters:
             - RemoveRequestHeader=Cookie
-            - RewritePath=/user-service/(?<segment>.*), /$\{segment} # /user-service/users/** 를 /users/**로 바꿔서 맵핑해준다. User MSA에서는 service 관련된 라우팅에 신경쓰지 않고 /users에 맵핑할 수 있다
+            - RewritePath=/user-service/(?<segment>.*), /$\{segment}
             - AuthorizationHeaderFilter
 
           # 카탈로그 서비스
@@ -58,21 +58,25 @@ spring:
           uri: lb://CATALOG-SERVICE
           predicates:
             - Path=/catalog-service/**
+            - Method=GET,POST
           filters:
             - RemoveRequestHeader=Cookie
-            - RewritePath=/catalog-service/(?<segment>.*), /$\{segment} # /user-service/users/** 를 /users/**로 바꿔서 맵핑해준다. User MSA에서는 service 관련된 라우팅에 신경쓰지 않고 /users에 맵핑할 수 있다
+            - RewritePath=/catalog-service/(?<segment>.*), /$\{segment}
 
         # 주문 서비스
         - id: order-service
           uri: lb://ORDER-SERVICE
           predicates:
             - Path=/order-service/**
+            - Method=GET,POST
           filters:
             - RemoveRequestHeader=Cookie
-            - RewritePath=/order-service/(?<segment>.*), /$\{segment} # /user-service/users/** 를 /users/**로 바꿔서 맵핑해준다. User MSA에서는 service 관련된 라우팅에 신경쓰지 않고 /users에 맵핑할 수 있다
+            - RewritePath=/order-service/(?<segment>.*), /$\{segment}
 
 
 eureka:
+  instance:
+    hostname: localhost
   client:
     register-with-eureka: true
     fetch-registry: true
