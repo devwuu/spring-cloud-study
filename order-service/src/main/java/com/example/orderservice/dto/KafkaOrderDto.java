@@ -22,13 +22,13 @@ public class KafkaOrderDto {
     @NoArgsConstructor
     private class Payload{
         private Long id;
+        private String order_id;
         private String product_id;
         private Integer qty;
-        private Integer unit_price;
         private Integer total_price;
+        private Integer unit_price;
         private String user_id;
-        private String order_id;
-        private LocalDate created_at;
+        private LocalDate created_at; // todo 타입 확인 필요
     }
 
 }
