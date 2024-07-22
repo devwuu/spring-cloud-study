@@ -26,7 +26,7 @@ import java.nio.charset.StandardCharsets;
 @Slf4j
 @Component
 public class AuthorizationHeaderFilter extends AbstractGatewayFilterFactory<AuthorizationHeaderFilter.Config> {
-
+// todo .../gatewayservice/filter/AuthorizationHeaderFilter.java uses or overrides a deprecated API.
     private final Environment env;
 
     public AuthorizationHeaderFilter(Environment env) {
