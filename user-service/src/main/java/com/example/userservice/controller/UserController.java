@@ -70,7 +70,7 @@ public class UserController {
 //        ApiResponse<List<OrderResponse>> orderResponses = orderClient.findByUserId(userId);
         CircuitBreaker circuitBreaker = circuitBreakerFactory.create("order-client-circuit-breaker");
         ApiResponse<List<OrderResponse>> orderResponses = circuitBreaker.run(() -> orderClient.findByUserId(userId),
-                (throwable) -> ApiResponse.<List<OrderResponse>>builder().data(List.of()).build());
+                (throwable) -> ApiResponse.<List<OrderResponse>>builder().data(List.of()).build()); // order service 에 문제가 생기면 무한히 통신하는 것을 중단하고 기본갑 return
 
         response.setOrders(orderResponses.getData());
         return ApiResponse.builder().status(200).data(response).build();
