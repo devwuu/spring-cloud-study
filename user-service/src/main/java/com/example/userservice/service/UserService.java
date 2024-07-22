@@ -1,7 +1,7 @@
 package com.example.userservice.service;
 
 import com.example.userservice.common.ApiExceptionCode;
-import com.example.userservice.dto.UserDTO;
+import com.example.userservice.dto.UserDto;
 import com.example.userservice.entity.User;
 import com.example.userservice.exception.CommonException;
 import com.example.userservice.mapper.UserMapper;
@@ -28,30 +28,30 @@ public class UserService implements UserDetailsService {
     private final BCryptPasswordEncoder passwordEncoder;
 
     @Transactional
-    public UserDTO create(UserDTO userDTO){
-        userDTO.setUserId(UUID.randomUUID().toString());
-        String encoded = passwordEncoder.encode(userDTO.getPwd());
-        User user = UserMapper.INSTANCE.userDTOToUser(userDTO);
+    public UserDto create(UserDto userDto){
+        userDto.setUserId(UUID.randomUUID().toString());
+        String encoded = passwordEncoder.encode(userDto.getPwd());
+        User user = UserMapper.INSTANCE.userDtoToUser(userDto);
         user.setEncryptedPwd(encoded);
         User saved = repository.saveAndFlush(user);
-        return UserMapper.INSTANCE.userToUserDTO(saved);
+        return UserMapper.INSTANCE.userToUserDto(saved);
     }
 
-    public UserDTO findByUserId(String userId){
+    public UserDto findByUserId(String userId){
         Optional<User> optional = repository.findByUserId(userId);
         User user = optional.orElseThrow(() -> new CommonException(ApiExceptionCode.NotFound));
-        return UserMapper.INSTANCE.userToUserDTO(user);
+        return UserMapper.INSTANCE.userToUserDto(user);
     }
 
-    public UserDTO findByEmail(String email){
+    public UserDto findByEmail(String email){
         Optional<User> optional = repository.findByEmail(email);
         User user = optional.orElseThrow(() -> new CommonException(ApiExceptionCode.NotFound));
-        return UserMapper.INSTANCE.userToUserDTO(user);
+        return UserMapper.INSTANCE.userToUserDto(user);
     }
 
-    public List<UserDTO> findAll(){
+    public List<UserDto> findAll(){
         List<User> users = repository.findAll();
-        return UserMapper.INSTANCE.userToUserDTO(users);
+        return UserMapper.INSTANCE.userToUserDto(users);
     }
 
     @Override

@@ -2,7 +2,7 @@ package com.example.userservice.security;
 
 import com.example.userservice.common.ApiExceptionCode;
 import com.example.userservice.dto.LoginRequest;
-import com.example.userservice.dto.UserDTO;
+import com.example.userservice.dto.UserDto;
 import com.example.userservice.exception.CommonException;
 import com.example.userservice.service.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -57,7 +57,7 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
                                             FilterChain chain,
                                             Authentication authResult) throws IOException, ServletException {
         User principal = (User) authResult.getPrincipal();
-        UserDTO user = service.findByEmail(principal.getUsername());
+        UserDto user = service.findByEmail(principal.getUsername());
         String token = Jwts.builder()
                 .signWith(SignatureAlgorithm.HS512, env.getProperty("token.secret"))
                 .subject(user.getUserId())

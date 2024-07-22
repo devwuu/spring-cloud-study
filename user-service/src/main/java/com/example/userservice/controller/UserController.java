@@ -6,12 +6,14 @@ import com.example.userservice.common.ApiResponse;
 import com.example.userservice.dto.CreateUserRequest;
 import com.example.userservice.dto.OrderResponse;
 import com.example.userservice.dto.UserResponse;
-import com.example.userservice.dto.UserDTO;
+import com.example.userservice.dto.UserDto;
 import com.example.userservice.mapper.UserMapper;
 import com.example.userservice.property.GreetingProperty;
 import com.example.userservice.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cloud.client.circuitbreaker.CircuitBreaker;
+import org.springframework.cloud.client.circuitbreaker.CircuitBreakerFactory;
 import org.springframework.core.env.Environment;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
@@ -27,9 +29,10 @@ public class UserController {
 
     private final GreetingProperty prop;
     private final UserService service;
-//    private final ServletWebServerApplicationContext context;
     private final Environment env;
     private final OrderServiceClient orderClient;
+
+    private final CircuitBreakerFactory circuitBreakerFactory;
 
     @GetMapping("/health_check")
     public String status(){
@@ -53,27 +56,31 @@ public class UserController {
         if(bindingResult.hasErrors()){
             ApiResponse.validationError(bindingResult);
         }
-        UserDTO userDTO = UserMapper.INSTANCE.createUserReqToUserDTO(request);
-        UserDTO saved = service.create(userDTO);
-        UserResponse response = UserMapper.INSTANCE.userDTOToCreateUserRes(saved);
+        UserDto userDto = UserMapper.INSTANCE.createUserReqToUserDto(request);
+        UserDto saved = service.create(userDto);
+        UserResponse response = UserMapper.INSTANCE.userDtoToCreateUserRes(saved);
         return ApiResponse.builder().status(201).data(response).build();
     }
 
     @GetMapping("/{id}")
     public ApiResponse findByUserId(@PathVariable("id") String userId){
-        UserDTO user = service.findByUserId(userId);
-        UserResponse response = UserMapper.INSTANCE.userDTOToCreateUserRes(user);
-        ApiResponse<List<OrderResponse>> orderResponses = orderClient.findByUserId(userId);
+        UserDto user = service.findByUserId(userId);
+        UserResponse response = UserMapper.INSTANCE.userDtoToCreateUserRes(user);
+
+//        ApiResponse<List<OrderResponse>> orderResponses = orderClient.findByUserId(userId);
+        CircuitBreaker circuitBreaker = circuitBreakerFactory.create("order-client-circuit-breaker");
+        ApiResponse<List<OrderResponse>> orderResponses = circuitBreaker.run(() -> orderClient.findByUserId(userId),
+                (throwable) -> ApiResponse.<List<OrderResponse>>builder().data(List.of()).build());
+
         response.setOrders(orderResponses.getData());
         return ApiResponse.builder().status(200).data(response).build();
     }
 
     @GetMapping("")
     public ApiResponse findAll(){
-        List<UserDTO> all = service.findAll();
-        List<UserResponse> responses = UserMapper.INSTANCE.userDTOToCreateUserRes(all);
+        List<UserDto> all = service.findAll();
+        List<UserResponse> responses = UserMapper.INSTANCE.userDtoToCreateUserRes(all);
         return ApiResponse.builder().status(200).data(responses).build();
-
     }
 
 

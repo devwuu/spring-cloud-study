@@ -5,6 +5,7 @@
 
 encrypt:
   key-store:
-    location: file://${user.home}/Desktop/secret/keystore/encryptKey.jks
+#    location: file://${user.home}/Desktop/secret/keystore/encryptKey.jks
+    location: file:/encryptKey.jks # 프로젝트 root 아래에
     password: qwerty1234
     alias: encryptKey

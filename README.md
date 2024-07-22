@@ -7,6 +7,8 @@
 * gateway service 서버
 * 유레카 클라이언트 서버
 
+[//]: # (todo key 만드는 법 문서화)
+
 # Spring Atuator란
 * 애플리케이션의 상태를 모니터링, Metric 수집, 환경 설정 정보 업데이트 등을 위한 Http Endpoint를 제공해주는 모듈이다.
 * 참고 문서 

@@ -2,7 +2,7 @@ package com.example.userservice.mapper;
 
 import com.example.userservice.dto.CreateUserRequest;
 import com.example.userservice.dto.UserResponse;
-import com.example.userservice.dto.UserDTO;
+import com.example.userservice.dto.UserDto;
 import com.example.userservice.entity.User;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
@@ -14,15 +14,15 @@ public interface UserMapper {
 
     UserMapper INSTANCE = Mappers.getMapper(UserMapper.class);
 
-    User userDTOToUser(UserDTO userDTO);
+    User userDtoToUser(UserDto userDto);
 
-    UserDTO userToUserDTO(User user);
-    List<UserDTO> userToUserDTO(List<User> user);
+    UserDto userToUserDto(User user);
+    List<UserDto> userToUserDto(List<User> user);
 
-    UserDTO createUserReqToUserDTO(CreateUserRequest request);
+    UserDto createUserReqToUserDto(CreateUserRequest request);
 
-    UserResponse userDTOToCreateUserRes(UserDTO userDTO);
-    List<UserResponse> userDTOToCreateUserRes(List<UserDTO> userDTO);
+    UserResponse userDtoToCreateUserRes(UserDto userDto);
+    List<UserResponse> userDtoToCreateUserRes(List<UserDto> userDt);
 
 
 }
