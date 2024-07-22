@@ -1,17 +1,20 @@
 package com.example.orderservice.dto;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class KafkaOrderDto {
 
     private KafkaSchema schema;
@@ -20,7 +23,9 @@ public class KafkaOrderDto {
     @Data
     @AllArgsConstructor
     @NoArgsConstructor
-    private class Payload{
+    @Builder
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
+    public static class Payload{
         private Long id;
         private String order_id;
         private String product_id;
@@ -28,7 +33,6 @@ public class KafkaOrderDto {
         private Integer total_price;
         private Integer unit_price;
         private String user_id;
-        private LocalDate created_at; // todo 타입 확인 필요
     }
 
 }

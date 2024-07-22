@@ -7,6 +7,21 @@
 * gateway service 서버
 * 유레카 클라이언트 서버
 
+# Spring Atuator란
+* 애플리케이션의 상태를 모니터링, Metric 수집, 환경 설정 정보 업데이트 등을 위한 Http Endpoint를 제공해주는 모듈이다.
+* 참고 문서 
+  * https://ksl2950.tistory.com/147
+
+# Spring cloud bus란
+* 환경 설정 정보가 변경되었을 때 각각의 애플리케이션에 대해서 refresh 하지 않고 bus를 통해 환경 설정 정보를 일괄 업데이트 할 수 있도록 해줌
+* cloud bus는 설정 정보 애플리케이션을 퍼블리셔로 설정하고 그 외 마이크로 서비스들을 구독자로 설정하여서  
+  설정 정보 애플리케이션이 설정 정보가 업데이트 되었다고 메세지를 퍼블리싱하면 그것을 구독하는 마이크로 서비스가 환경 설저 정보를 업데이트 할 수 있도록 한다.
+* 이번 프로젝트에서는 rabbitMQ를 사용했다 (다른 MQ를 사용할 수도 있다.)
+* 참고 문서
+  * https://happycloud-lee.tistory.com/211
+
+
+
 # kafka 예제
 * 공식 문서
   * https://docs.confluent.io/platform/current/installation/docker/config-reference.html

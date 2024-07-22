@@ -53,18 +53,20 @@ public class OrderController {
 
         OrderDto orderDTO = OrderMapper.INSTANCE.orderReqToOrderDto(request);
         orderDTO.setUserId(userId);
-//        orderDTO.setOrderId(UUID.randomUUID().toString());
-//        orderDTO.setTotalPrice(orderDTO.getQty() * orderDTO.getUnitPrice());
-//        orderDTO.setCreatedAt(LocalDate.now());
+        orderDTO.setOrderId(UUID.randomUUID().toString());
+        orderDTO.setTotalPrice(orderDTO.getQty() * orderDTO.getUnitPrice());
 
-        // 신규 주문 등록
-        OrderDto saved = service.save(orderDTO);
+        // todo catalog service에서 구독하는 브로커와 sink 커넥터에서 구독하는 topic이 달라야할 필요가 있을까?
+        // 물론 둘이 소비하는 dto는 다르긴 하지만... 암튼 고민해볼 필요가 있음
 
-        // send order to broker
+        // send order to broker (sink connector - purchase)
+        producer.sendByKafkaPayload("order_created", orderDTO);
+
+        // send order to broker (consumer - catalog service)
         // todo 이렇게 되면 재고 확인이 나중에 이루어지게 되는데.. transaction 관리가 필요하다 => SAGA pattern
-        producer.send("new_order_topic", saved); // consumer 에서 바라보고 있는 topic과 같은 topic으로
+        producer.sendByDto("new_order_topic", orderDTO); // consumer 에서 바라보고 있는 topic과 같은 topic으로
 
-        OrderResponse response = OrderMapper.INSTANCE.orderDtoToOrderRes(saved);
+        OrderResponse response = OrderMapper.INSTANCE.orderDtoToOrderRes(orderDTO);
         return ApiResponse.builder().status(201).data(response).build();
     }
 

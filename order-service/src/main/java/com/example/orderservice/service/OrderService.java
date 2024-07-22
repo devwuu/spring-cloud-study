@@ -22,7 +22,6 @@ public class OrderService {
     public OrderDto save(OrderDto order) {
         order.setOrderId(UUID.randomUUID().toString());
         order.setTotalPrice(order.getQty() * order.getUnitPrice());
-        order.setCreatedAt(LocalDate.now());
         Order entity = OrderMapper.INSTANCE.orderDtoToOrder(order);
         Order saved = repository.saveAndFlush(entity);
         return OrderMapper.INSTANCE.orderToOrderDto(saved);
