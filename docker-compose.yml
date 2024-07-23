@@ -123,6 +123,14 @@ services:
       - ./confluent/connect/connector/confluentinc-kafka-connect-jdbc/lib:/usr/share/confluent-hub-components
       - ./confluent/connect/mysql:/etc/kafka-connect/jars
 
+  zipkin:
+    image: openzipkin/zipkin
+    restart: always
+    container_name: zipkin
+    hostname: zipkin
+    ports:
+      - "9411:9411"
+
 networks:
   kafka-net:
     driver: bridge

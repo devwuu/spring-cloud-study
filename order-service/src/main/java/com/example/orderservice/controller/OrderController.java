@@ -73,8 +73,12 @@ public class OrderController {
     // todo path 고민...
     @GetMapping("/{userId}/orders")
     public ApiResponse findByUserId(@PathVariable("userId") String userId){
+        log.info("before receive order....");
+//        INFO 25696 --- [order-service] [o-auto-1-exec-1] [669f5a06df3826fc060cd131377a188d-060cd131377a188d] c.e.o.controller.OrderController         : before receive order....
+                                                            // trace id - span id
         List<OrderDto> orders = service.findByUserId(userId);
         List<OrderResponse> responses = OrderMapper.INSTANCE.orderDtoToOrderRes(orders);
+        log.info("after receive order....");
         return ApiResponse.builder().status(200).data(responses).build();
     }
 

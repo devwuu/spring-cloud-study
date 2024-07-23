@@ -67,10 +67,13 @@ public class UserController {
         UserDto user = service.findByUserId(userId);
         UserResponse response = UserMapper.INSTANCE.userDtoToCreateUserRes(user);
 
-//        ApiResponse<List<OrderResponse>> orderResponses = orderClient.findByUserId(userId);
+        // INFO 22492 --- [user-service] [o-auto-1-exec-2] [669f5ac45dee4559ad1a8eda0ab257dc-a36d2b2996428823] c.e.u.controller.UserController          : done call order...
+                                                            // trace id - span id
+        log.info("ready call order...");
         CircuitBreaker circuitBreaker = circuitBreakerFactory.create("order-client-circuit-breaker");
         ApiResponse<List<OrderResponse>> orderResponses = circuitBreaker.run(() -> orderClient.findByUserId(userId),
-                (throwable) -> ApiResponse.<List<OrderResponse>>builder().data(List.of()).build()); // order service 에 문제가 생기면 무한히 통신하는 것을 중단하고 기본갑 return
+                (throwable) -> ApiResponse.<List<OrderResponse>>builder().data(List.of()).build()); // order service 에 문제가 생기면 무한히 통신하는 것을 중단하고 기본값 return
+        log.info("done call order...");
 
         response.setOrders(orderResponses.getData());
         return ApiResponse.builder().status(200).data(response).build();

@@ -86,3 +86,14 @@
   {"schema":{"type":"struct","fields":[{"type":"int64","optional":false,"field":"id"},{"type":"string","optional":false,"field":"email"},{"type":"string","optional":false,"field":"encrypted_pwd"},{"type":"string","optional":false,"field":"user_id"}],"optional":false,"name":"member"},"payload":{"id":1,"email":"user1@test.com","encrypted_pwd":"","user_id":"6b2a13f2-0970-4ea7-967a-475c6265e52a"}}
   {"schema":{"type":"struct","fields":[{"type":"int64","optional":false,"field":"id"},{"type":"string","optional":false,"field":"email"},{"type":"string","optional":false,"field":"encrypted_pwd"},{"type":"string","optional":false,"field":"user_id"}],"optional":false,"name":"member"},"payload":{"id":2,"email":"test@gmai.com","encrypted_pwd":"","user_id":"new_member"}}
   ```
+  
+# Tracing
+* spring-cloud-sleuth 의 마지막 마이너 버전은 3.1 이후 Micrometer Tracing 프로젝트로 이전  
+  따라서 최신 버전과 연동을 위해서 Micrometer를 채택하여 사용
+* 공식 문서
+  * https://spring.io/projects/spring-cloud-sleuth
+  * https://docs.spring.io/spring-boot/reference/actuator/tracing.html#actuator.micrometer-tracing
+  * https://docs.micrometer.io/tracing/reference/index.html
+  * https://github.com/micrometer-metrics/micrometer-samples/blob/main/micrometer-samples-boot3-web/build.gradle
+* 참고 문서
+  * https://easywritten.com/post/using-spring-boot-3-with-zipkin/
