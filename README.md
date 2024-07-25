@@ -95,5 +95,6 @@
   * https://docs.spring.io/spring-boot/reference/actuator/tracing.html#actuator.micrometer-tracing
   * https://docs.micrometer.io/tracing/reference/index.html
   * https://github.com/micrometer-metrics/micrometer-samples/blob/main/micrometer-samples-boot3-web/build.gradle
+  * https://github.com/spring-cloud/spring-cloud-openfeign/issues/812
 * 참고 문서
   * https://easywritten.com/post/using-spring-boot-3-with-zipkin/

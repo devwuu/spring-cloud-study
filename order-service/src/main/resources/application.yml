@@ -31,8 +31,8 @@ management:
     sampling:
       probability: 1.0 # 모든 로그 샘플링
     propagation:
-      consume: B3
-      produce: B3_MULTI
+      consume: w3c
+      produce: w3c
   endpoints:
     web:
       exposure:
