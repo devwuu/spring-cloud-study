@@ -8,6 +8,7 @@ import com.example.orderservice.dto.OrderResponse;
 import com.example.orderservice.mapper.OrderMapper;
 import com.example.orderservice.messageque.OrderProducer;
 import com.example.orderservice.service.OrderService;
+import io.micrometer.core.annotation.Timed;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.env.Environment;
@@ -41,6 +42,7 @@ public class OrderController {
         return ApiResponse.builder().status(200).data(response).build();
     }
 
+    @Timed(value = "order.user.order", longTask = true)
     @PostMapping("/{userId}/orders")
     public ApiResponse save(
             @PathVariable("userId") String userId,

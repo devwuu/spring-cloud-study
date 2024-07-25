@@ -5,12 +5,6 @@ spring:
   application:
     name: gateway-service
 
-  rabbitmq:
-    host: localhost
-    port: 5672
-    username: user
-    password: password
-
   cloud:
     gateway:
       routes:
@@ -33,7 +27,7 @@ spring:
             - RemoveRequestHeader=Cookie
             - RewritePath=/user-service/(?<segment>.*), /$\{segment}
 
-        # actuator 관련
+        # actuator 관련 todo actuator는 보안상의 이유로 인증된 사용자만 접근 가능해야 한다
         - id: user-service
           uri: lb://USER-SERVICE
           predicates:
@@ -88,5 +82,5 @@ management:
   endpoints:
     web:
       exposure:
-        include: refresh, beans, health, httpexchanges, busrefresh
+        include: refresh, health, beans, busrefresh, info, metrics, prometheus
 

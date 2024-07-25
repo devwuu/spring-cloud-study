@@ -35,6 +35,8 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-amqp'
     implementation 'org.springframework.cloud:spring-cloud-stream-binder-rabbit'
     implementation 'org.springframework.cloud:spring-cloud-bus'
+    implementation 'io.micrometer:micrometer-registry-prometheus'
+
     testImplementation 'org.springframework.amqp:spring-rabbit-test'
 //    implementation('io.netty:netty-resolver-dns-native-macos')
     compileOnly 'org.projectlombok:lombok'

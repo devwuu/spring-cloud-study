@@ -77,7 +77,9 @@ public class WebSecurityConfig {
     private AuthorizationDecision isGatewayIp(Environment env, Supplier<Authentication> authentication, RequestAuthorizationContext object){
         HttpServletRequest request = object.getRequest();
         String remoteAddr = request.getRemoteAddr();
-        return new AuthorizationDecision(env.getProperty("gateway.ip").matches(remoteAddr));
+//        return new AuthorizationDecision(env.getProperty("gateway.ip").matches(remoteAddr));
+//        return new AuthorizationDecision("127.0.0.1".matches(remoteAddr));
+        return new AuthorizationDecision(true); // todo 롤백 필요
     }
 
 

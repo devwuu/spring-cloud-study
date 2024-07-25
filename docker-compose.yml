@@ -131,6 +131,36 @@ services:
     ports:
       - "9411:9411"
 
+  prometheus:
+    image: prom/prometheus
+    restart: always
+    container_name: prometheus
+    hostname: prometheus
+    networks:
+      - monitor-net
+    command:
+      - '--storage.tsdb.path=/prometheus'
+      - '--config.file=/etc/prometheus/prometheus.yml'
+    ports:
+      - "9090:9090"
+    volumes:
+      - "./prometheus/config/prometheus.yml:/etc/prometheus/prometheus.yml"
+      - "./prometheus/data:/prometheus "
+
+  grafana:
+    image: grafana/grafana
+    restart: always
+    container_name: grafana
+    hostname: grafana
+    networks:
+      - monitor-net
+    ports:
+      - "3000:3000"
+    volumes:
+      - './grafana:/var/lib/grafana'
+
 networks:
   kafka-net:
+    driver: bridge
+  monitor-net:
     driver: bridge

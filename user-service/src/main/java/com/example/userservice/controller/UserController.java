@@ -10,6 +10,7 @@ import com.example.userservice.dto.UserDto;
 import com.example.userservice.mapper.UserMapper;
 import com.example.userservice.property.GreetingProperty;
 import com.example.userservice.service.UserService;
+import io.micrometer.core.annotation.Timed;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.client.circuitbreaker.CircuitBreaker;
@@ -62,6 +63,7 @@ public class UserController {
         return ApiResponse.builder().status(201).data(response).build();
     }
 
+    @Timed(value = "user.specific", longTask = true)
     @GetMapping("/{id}")
     public ApiResponse findByUserId(@PathVariable("id") String userId){
         UserDto user = service.findByUserId(userId);

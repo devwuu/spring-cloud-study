@@ -98,3 +98,13 @@
   * https://github.com/spring-cloud/spring-cloud-openfeign/issues/812
 * 참고 문서
   * https://easywritten.com/post/using-spring-boot-3-with-zipkin/
+
+# Monitoring
+* 프로메테우스 : **Metrics를 수집**하고 모니터링 및 알람에 사용
+* 그라파나 : 데이터 시각화, 모니터링 및 분석을 위함. 시계열 데이터를 시각화 하기 위한 **대시보드** 제공.
+  * 프로메테우스 서버 URL : http://prometheus:9090
+* 공식 문서
+  * https://prometheus.io/docs/prometheus/latest/installation/
+* 참고 문서
+  * https://semtul79.tistory.com/21
+  * https://kimjingo.tistory.com/239
