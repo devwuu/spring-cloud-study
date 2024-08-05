@@ -19,12 +19,14 @@ spring:
 eureka:
   instance:
     instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
-    hostname: localhost
+#    hostname: localhost
+    hostname: order-service
   client:
     register-with-eureka: true
     fetch-registry: true
     service-url:
-      defaultZone: http://localhost:8761/eureka
+#      defaultZone: http://localhost:8761/eureka
+      defaultZone: http://discovery-service:8761/eureka
 
 management:
   tracing:
@@ -39,7 +41,8 @@ management:
         include: refresh, health, beans, busrefresh, info, metrics, prometheus
   zipkin:
     tracing:
-      endpoint: http://localhost:9411/api/v2/spans
+#      endpoint: http://localhost:9411/api/v2/spans
+      endpoint: http://zipkin:9411/api/v2/spans
 
 #logging:
 #  pattern:
