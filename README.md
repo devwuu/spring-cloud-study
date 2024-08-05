@@ -108,3 +108,9 @@
 * 참고 문서
   * https://semtul79.tistory.com/21
   * https://kimjingo.tistory.com/239
+
+# App container
+  ```zsh
+  docker build -t devwuu/config-service:1.0
+  ```
+  

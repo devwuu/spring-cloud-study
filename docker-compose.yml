@@ -1,7 +1,71 @@
 
 services:
 
-  # todo 서비스 컨테이너 추가하기
+  discovery-service:
+    image: devwuu/discouvery-service
+    restart: always
+    hostname: discovery-service
+    container_name: discovery-service
+    ports:
+      - 8761:8761
+    networks:
+      - app-net
+
+  config-service:
+    image: devwuu/config-service
+    restart: always
+    hostname: config-service
+    container_name: config-service
+    ports:
+      - 8888:8888
+    networks:
+      - app-net
+
+  gateway-service:
+    image: devwuu/gateway-service
+    restart: always
+    hostname: gateway-service
+    container_name: gateway-service
+    ports:
+      - 8000:8000
+    depends_on:
+      - config-service
+      - discovery-service
+    networks:
+      - app-net
+
+  user-service:
+    image: devwuu/user-servicee
+    restart: always
+    hostname: user-service
+    container_name: user-service
+    depends_on:
+      - config-service
+      - discovery-service
+    networks:
+      - app-net
+
+  order-service:
+    image: devwuu/order-service
+    restart: always
+    hostname: order-service
+    container_name: order-service
+    depends_on:
+      - config-service
+      - discovery-service
+    networks:
+      - app-net
+
+  catalog-service:
+    image: devwuu/catalog-service
+    restart: always
+    hostname: catalog-service
+    container_name: catalog-service
+    depends_on:
+      - config-service
+      - discovery-service
+    networks:
+      - app-net
 
   user-service-db:
     image: mariadb
@@ -172,9 +236,5 @@ services:
       - './grafana:/var/lib/grafana'
 
 networks:
-#  kafka-net:
-#    driver: bridge
-#  monitor-net:
-#    driver: bridge
   app-net:
     driver: bridge
