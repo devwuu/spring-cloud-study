@@ -2,7 +2,9 @@
 services:
 
   discovery-service:
-    image: devwuu/discouvery-service
+    build:
+      context: ./discoveryservice
+      dockerfile: Dockerfile
     restart: always
     hostname: discovery-service
     container_name: discovery-service
@@ -12,7 +14,9 @@ services:
       - app-net
 
   config-service:
-    image: devwuu/config-service
+    build:
+      context: ./configuration-service
+      dockerfile: Dockerfile
     restart: always
     hostname: config-service
     container_name: config-service
@@ -22,7 +26,9 @@ services:
       - app-net
 
   gateway-service:
-    image: devwuu/gateway-service
+    build:
+      context: ./gateway-service
+      dockerfile: Dockerfile
     restart: always
     hostname: gateway-service
     container_name: gateway-service
@@ -35,35 +41,44 @@ services:
       - app-net
 
   user-service:
-    image: devwuu/user-servicee
+    build:
+      context: ./user-service
+      dockerfile: Dockerfile
     restart: always
     hostname: user-service
     container_name: user-service
     depends_on:
       - config-service
       - discovery-service
+      - user-service-db
     networks:
       - app-net
 
   order-service:
-    image: devwuu/order-service
+    build:
+      context: ./order-service
+      dockerfile: Dockerfile
     restart: always
     hostname: order-service
     container_name: order-service
     depends_on:
       - config-service
       - discovery-service
+      - order-service-db
     networks:
       - app-net
 
   catalog-service:
-    image: devwuu/catalog-service
+    build:
+      context: ./catalog-service
+      dockerfile: Dockerfile
     restart: always
     hostname: catalog-service
     container_name: catalog-service
     depends_on:
       - config-service
       - discovery-service
+      - catalog-service-db
     networks:
       - app-net
 

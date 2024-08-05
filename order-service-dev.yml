@@ -3,6 +3,6 @@ spring:
   datasource:
     driver-class-name: org.mariadb.jdbc.Driver
 #    url: jdbc:mariadb://localhost:3307/order_sys
-    url: jdbc:mariadb://order-service-db:3307/order_sys
+    url: jdbc:mariadb://order-service-db:3306/order_sys
     username: root
     password: qwerty
