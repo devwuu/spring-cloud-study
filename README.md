@@ -109,8 +109,12 @@
   * https://semtul79.tistory.com/21
   * https://kimjingo.tistory.com/239
 
-# App container
+# docker 관련 명령어
+* 이미지 빌드
   ```zsh
   docker build -t devwuu/config-service:1.0
   ```
-  
+* 프로파일 설정
+  ```zsh
+  docker compose --profile dev up
+  ```

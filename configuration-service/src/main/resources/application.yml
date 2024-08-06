@@ -1,27 +1,3 @@
-server:
-  port: 8888
-
 spring:
-  application:
-    name: configuration-service
-
-  rabbitmq:
-    host: localhost
-    port: 5672
-    username: user
-    password: password
-
-  cloud:
-    config:
-      server:
-        git:
-          uri: https://github.com/devwuu/spring-cloud-study
-          default-label: section/docker
-#          http://localhost:8888/configuration/default
-#         remote git repo에 있는 configuration.yml 의 값을 읽어온다.
-
-management:
-  endpoints:
-    web:
-      exposure:
-        include: health, busrefresh
+  profiles:
+    default: dev

@@ -12,6 +12,8 @@ services:
       - 8761:8761
     networks:
       - app-net
+    profiles:
+      - docker
 
   config-service:
     build:
@@ -24,6 +26,8 @@ services:
       - 8888:8888
     networks:
       - app-net
+    profiles:
+      - docker
 
   gateway-service:
     build:
@@ -39,6 +43,8 @@ services:
       - discovery-service
     networks:
       - app-net
+    profiles:
+      - docker
 
   user-service:
     build:
@@ -53,6 +59,8 @@ services:
       - user-service-db
     networks:
       - app-net
+    profiles:
+      - docker
 
   order-service:
     build:
@@ -67,6 +75,8 @@ services:
       - order-service-db
     networks:
       - app-net
+    profiles:
+      - docker
 
   catalog-service:
     build:
@@ -81,6 +91,8 @@ services:
       - catalog-service-db
     networks:
       - app-net
+    profiles:
+      - docker
 
   user-service-db:
     image: mariadb
@@ -96,6 +108,9 @@ services:
       MARIADB_DATABASE: user_sys
     volumes:
       - "./db/user:/var/lib/mysql"
+    profiles:
+      - docker
+      - dev
 
   order-service-db:
     image: mariadb
@@ -104,6 +119,9 @@ services:
     container_name: order-service-db
     networks:
       - app-net
+    profiles:
+      - docker
+      - dev
     ports:
       - 3307:3306
     environment:
@@ -117,6 +135,9 @@ services:
     restart: always
     hostname: catalog-service-db
     container_name: catalog-service-db
+    profiles:
+      - docker
+      - dev
     networks:
       - app-net
     ports:
@@ -132,6 +153,9 @@ services:
     restart: always
     hostname: rabbitmq
     container_name: rabbitmq
+    profiles:
+      - docker
+      - dev
     networks:
       - app-net
     volumes:
@@ -149,6 +173,9 @@ services:
     restart: always
     container_name: zookeeper
     hostname: zookeeper
+    profiles:
+      - docker
+      - dev
     networks:
       - app-net
     ports:
@@ -164,6 +191,9 @@ services:
     restart: always
     hostname: broker-1
     container_name: broker-1
+    profiles:
+      - docker
+      - dev
     networks:
       - app-net
     depends_on:
@@ -188,6 +218,9 @@ services:
     platform: linux/arm64/v8
     hostname: connector
     container_name: connector
+    profiles:
+      - docker
+      - dev
     ports:
       - 8083:8083
     networks:
@@ -217,6 +250,9 @@ services:
     restart: always
     container_name: zipkin
     hostname: zipkin
+    profiles:
+      - docker
+      - dev
     networks:
       - app-net
     ports:
@@ -227,6 +263,9 @@ services:
     restart: always
     container_name: prometheus
     hostname: prometheus
+    profiles:
+      - docker
+      - dev
     networks:
       - app-net
     command:
@@ -243,6 +282,9 @@ services:
     restart: always
     container_name: grafana
     hostname: grafana
+    profiles:
+      - docker
+      - dev
     networks:
       - app-net
     ports:
