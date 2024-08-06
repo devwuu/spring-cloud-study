@@ -5,10 +5,10 @@ token:
 
 spring:
   rabbitmq:
-    host: localhost
+    host: rabbitmq
     port: 5672
     username: user
     password: password
 
 api:
-  order-service: http://localhost:8000/orders
+  order-service: http://order-service/orders # order-service는 user-service에서 해당 아이디를 가진 유레카 클라이언트로 치환된다
