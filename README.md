@@ -116,5 +116,5 @@
   ```
 * 프로파일 설정
   ```zsh
-  docker compose --profile dev up
+  docker compose --profile docker up -d
   ```

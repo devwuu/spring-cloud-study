@@ -1,17 +1,14 @@
-
-
 server:
   port: 0
 
 spring:
   application:
-    name: user-service
+    name: catalog-service
 
   cloud:
     config:
-      name: user-service
       uri: http://config-service:8888
-
+      name: catalog-service
   jpa:
     show-sql: true
     generate-ddl: true
@@ -23,35 +20,15 @@ spring:
     init:
       mode: always
 
-management:
-  tracing:
-    sampling:
-      probability: 1.0 # 모든 로그 샘플링
-    propagation:
-      consume: w3c
-      produce: w3c
-  endpoints:
-    web:
-      exposure:
-        include: refresh, health, beans, busrefresh, info, metrics, prometheus
-  zipkin:
-    tracing:
-      endpoint: http://zipkin:9411/api/v2/spans
-
 eureka:
   instance:
     instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
-    hostname: user-service
+    hostname: catalog-service
   client:
     register-with-eureka: true
     fetch-registry: true
     service-url:
       defaultZone: http://discovery-service:8761/eureka
 
-logging:
-  level:
-    com.example.userservice.client: DEBUG
-
-greeting:
-  message: Welcome to User Service
-
+kafka:
+  uri: http://broker-1:9092

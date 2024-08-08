@@ -1,26 +1,31 @@
+
 server:
   port: 0
 
-
 spring:
   application:
-    name: user-service
+    name: order-service
 
   cloud:
     config:
-      name: user-service
       uri: http://localhost:8888
+      name: order-service
 
   jpa:
     show-sql: true
     generate-ddl: true
     hibernate:
       ddl-auto: update
-    defer-datasource-initialization: true
 
-  sql:
-    init:
-      mode: always
+eureka:
+  instance:
+    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+    hostname: localhost
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka
 
 management:
   tracing:
@@ -36,21 +41,3 @@ management:
   zipkin:
     tracing:
       endpoint: http://localhost:9411/api/v2/spans
-
-eureka:
-  instance:
-    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
-    hostname: localhost
-  client:
-    register-with-eureka: true
-    fetch-registry: true
-    service-url:
-      defaultZone: http://localhost:8761/eureka
-
-logging:
-  level:
-    com.example.userservice.client: DEBUG
-
-greeting:
-  message: Welcome to User Service
-

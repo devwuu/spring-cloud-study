@@ -7,4 +7,4 @@ VOLUME /tmp
 COPY build/libs/configuration-service-0.0.1-SNAPSHOT.jar configuration-service.jar
 COPY build/libs/encryptKey.jks encryptKey.jks
 
-ENTRYPOINT ["java", "-jar", "configuration-service.jar"]
+ENTRYPOINT ["java", "-Dspring.profiles.active=docker", "-jar", "configuration-service.jar"]
