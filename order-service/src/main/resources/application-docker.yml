@@ -6,16 +6,16 @@ spring:
   application:
     name: order-service
 
-  cloud:
-    config:
-      uri: http://config-service:8888
-      name: order-service
+  config:
+    import: optional:configserver:http://config-service:8888
+    name: order-service
 
   jpa:
     show-sql: true
     generate-ddl: true
     hibernate:
       ddl-auto: update
+
 
 eureka:
   instance:

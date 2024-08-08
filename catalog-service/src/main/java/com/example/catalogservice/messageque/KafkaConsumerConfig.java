@@ -1,6 +1,7 @@
 package com.example.catalogservice.messageque;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.springframework.context.annotation.Bean;
@@ -17,6 +18,7 @@ import java.util.Map;
 @EnableKafka
 @Configuration
 @RequiredArgsConstructor
+@Slf4j
 public class KafkaConsumerConfig {
 
     private final Environment env;
@@ -24,6 +26,7 @@ public class KafkaConsumerConfig {
     @Bean
     public ConsumerFactory<String, String> consumerFactory(){
         Map<String, Object> properties = new HashMap<>();
+        log.info("kafka uri", env.getProperty("kafka.uri"));
         properties.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, env.getProperty("kafka.uri"));
         properties.put(ConsumerConfig.GROUP_ID_CONFIG, "consumers"); // consumer 그룹 id
         properties.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);

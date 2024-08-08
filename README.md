@@ -22,7 +22,9 @@
 * 참고 문서
   * https://happycloud-lee.tistory.com/211
 
-
+# Spring cloud client 설정 변경
+* bootstrap.yml -> application.yml
+  * https://docs.spring.io/spring-cloud-config/docs/current/reference/html/#_spring_cloud_config_client
 
 # kafka 예제
 * 공식 문서

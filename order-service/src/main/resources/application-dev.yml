@@ -6,10 +6,10 @@ spring:
   application:
     name: order-service
 
-  cloud:
-    config:
-      uri: http://localhost:8888
-      name: order-service
+  config:
+    import: optional:configserver:http://localhost:8888
+    name: order-service
+
 
   jpa:
     show-sql: true
